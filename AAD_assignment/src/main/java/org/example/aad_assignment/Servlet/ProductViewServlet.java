@@ -19,7 +19,7 @@ import java.util.List;
 
 @WebServlet(name = "ProductViewServlet", value = "/product-view")
 public class ProductViewServlet extends HttpServlet {
-    String DB_URL="jdbc:mysql://localhost/Management_system";
+    String DB_URL="jdbc:mysql://localhost/ecommerce";
     String DB_USER="root";
     String DB_PASSWORD="Ijse@123";
 
@@ -41,7 +41,8 @@ public class ProductViewServlet extends HttpServlet {
                         rst.getInt(1),
                         rst.getString(2),
                         rst.getInt(3),
-                        rst.getDouble(4)
+                        rst.getDouble(4),
+                        rst.getString(5)
                 );
                 productList.add(productDTO);
             }

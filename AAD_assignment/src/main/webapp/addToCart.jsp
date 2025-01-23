@@ -82,6 +82,12 @@
     th {
         background-color: #495057;
     }
+
+    img {
+        max-width: 80px;
+        max-height: 60px;
+        object-fit: contain;
+    }
 </style>
 
 <body>
@@ -107,6 +113,7 @@
                     <th>Name</th>
                     <th>Qty</th>
                     <th>UnitPrice</th>
+                    <th>Image</th>
                 </tr>
                 </thead>
                 <tbody id="itemTableBody">
@@ -118,6 +125,21 @@
                     <td><%= product.getName() %></td>
                     <td><%= product.getQty()%></td>
                     <td><%= product.getUnitPrice() %></td>
+                    <td>
+                        <%
+                            String imagePath = product.getImagePath();
+                            if (imagePath != null && !imagePath.isEmpty()) {
+                        %>
+                        <img src="<%= request.getContextPath() + "/" + imagePath %>" alt="Product Image">
+                        <%
+                        } else {
+                        %>
+                        <p>No image available</p>
+                        <%
+                            }
+                        %>
+                    </td>
+
                 </tr>
                 <%
                     }
@@ -132,8 +154,6 @@
                 }
             %>
         </div>
-
-
 
         <div class="right-side">
             <h4>Add Item to Cart</h4>
@@ -161,6 +181,7 @@
                 </div>
 
                 <button type="submit" class="btn btn-primary w-100">Add to Cart</button>
+                <a href="placeOrder" class="btn btn-warning btn-sm">Place Order</a>
             </form>
         </div>
     </section>

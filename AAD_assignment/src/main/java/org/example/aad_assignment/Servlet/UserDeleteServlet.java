@@ -11,53 +11,43 @@ import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.PreparedStatement;
 
-@WebServlet(name = "ProductUpdateServlet", value = "/product-update")
-public class ProductUpdateServlet extends HttpServlet {
+@WebServlet(name = "UserDeleteServlet", value = "/user-delete")
+public class UserDeleteServlet extends HttpServlet {
     String DB_URL="jdbc:mysql://localhost/ecommerce";
     String DB_USER="root";
     String DB_PASSWORD="Ijse@123";
 
     @Override
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-        String code=req.getParameter("item_code");
-        String name=req.getParameter("item_name");
-        int qty= Integer.parseInt(req.getParameter("item_qty"));
-        double unitPrice= Double.parseDouble(req.getParameter("item_unitPrice"));
-        String image=req.getParameter("category_image");
-
+        String user_name = req.getParameter("user_name");
 
         try {
             Class.forName("com.mysql.cj.jdbc.Driver");
-            Connection connection= DriverManager.getConnection(
+            Connection connection = DriverManager.getConnection(
                     DB_URL,
                     DB_USER,
                     DB_PASSWORD
             );
 
-            String sql = "UPDATE product SET name=?, qty=?, unitPrice=?, image_path=? WHERE code=?";
+            String sql="DELETE FROM users WHERE name=?";
             PreparedStatement pstm=connection.prepareStatement(sql);
-            pstm.setString(1,name);
-            pstm.setInt(2,qty);
-            pstm.setDouble(3,unitPrice);
-            pstm.setString(4,image);
-            pstm.setString(5,code);
-
+            pstm.setString(1,user_name);
 
             int effectRowCount=pstm.executeUpdate();
 
             if (effectRowCount>0){
                 resp.sendRedirect(
-                        "product-update.jsp?message=Product updated successfully"
+                        "user-delete.jsp?message=Customer delete successfully"
                 );
             }else {
                 resp.sendRedirect(
-                        "product-update.jsp?message=Product updated unsuccessfully"
+                        "user-delete.jsp?error=Customer not found"
                 );
             }
-        }catch (Exception e){
+        } catch (Exception e) {
             e.printStackTrace();
             resp.sendRedirect(
-                    "product-update.jsp?=Product updated successfully"
+                    "user-delete.jsp?error=Customer delete Unsuccessfully"
             );
         }
     }

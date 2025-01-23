@@ -228,3 +228,30 @@
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
 </body>
 </html>
+
+<%--            <select id="inputState" class="form-select" name="customer_name">--%>
+<%--                <option selected>Choose...</option>--%>
+<%--                <%--%>
+
+<%--                       try {--%>
+<%--                           Class.forName("com.mysql.cj.jdbc.Driver");--%>
+<%--                           Connection connection = DriverManager.getConnection(--%>
+<%--                                   "jdbc:mysql://localhost/Management_system",--%>
+<%--                                   "root",--%>
+<%--                                   "Ijse@123"--%>
+<%--                           );--%>
+<%--                           Statement st=connection.createStatement();--%>
+<%--                           String query="SELECT name FROM customer WHERE role = 'customer'";--%>
+
+<%--                           ResultSet rst=st.executeQuery(query);--%>
+<%--                           while (rst.next()){--%>
+<%--                %>--%>
+<%--                <option ><%=rst.getString("Name")%></option>--%>
+<%--                <%--%>
+<%--                           }--%>
+<%--                   }catch (Exception e){--%>
+<%--                           e.printStackTrace();--%>
+<%--                       }--%>
+<%--                %>--%>
+
+<%--            </select>--%>

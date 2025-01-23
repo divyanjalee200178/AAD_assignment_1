@@ -69,8 +69,19 @@
         font-size: 15px;
     }
 
-    .form-select{
-        height: 32px;
+    .links {
+        text-align: center;
+        margin-top: 20px;
+    }
+    .links a {
+        color: #00d4ff;
+        text-decoration: none;
+        font-weight: bold;
+        transition: color 0.3s;
+    }
+    .links a:hover {
+        color: #007bff;
+        text-decoration: underline;
     }
 
 
@@ -102,27 +113,39 @@
 
                         <div class="mb-3">
                             <label for="exampleInputPassword1" class="form-label">Password</label>
-                            <input type="password" name="password" class="form-control" id="exampleInputPassword1">
+                            <input type="password" name="password" class="form-control" placeholder="Password" aria-label="password" id="exampleInputPassword1">
                         </div>
 
                         <div class="d-flex justify-content-center mt-4">
                             <button type="submit" class="btn btn-primary">Login</button>
                         </div>
 
-                        <div class="create-account">
-                            <span>Don't have an account? <a href="customer-save.jsp">Create one</a></span>
-                        </div>
+
+
+<%--                        <ul>--%>
+<%--                            <li class="nav-item"><a class="nav-link" href="customerCat"></a></li>--%>
+<%--                        </ul>--%>
                     </div>
                 </div>
             </div>
+        </div>
+        <div class="links">
+            <p>Don't have an account? <a href="user-save.jsp">Create one</a></p>
+            <p>Forgot your password? <a href="user-update.jsp">Change it here</a></p>
         </div>
     </form>
 
 </section>
 
-<%--<a href="customer-save.jsp">Add new customer</a><br>--%>
+<%--<a href="user-save.jsp">Add new customer</a><br>--%>
 <%--<a href="product-save.jsp">Add new product</a><br>--%>
 <%--<a href="product-delete.jsp">Delete new product</a><br>--%>
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+
+<%--<script>--%>
+<%--    window.onload = function() {--%>
+<%--        window.location.href = "customerCat";--%>
+<%--    };--%>
+<%--</script>--%>
 </body>
 </html>

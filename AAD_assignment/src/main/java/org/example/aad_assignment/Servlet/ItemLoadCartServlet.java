@@ -1,4 +1,4 @@
-package org.example.aad_assignment;
+package org.example.aad_assignment.Servlet;
 
 import jakarta.servlet.RequestDispatcher;
 import jakarta.servlet.ServletException;
@@ -15,7 +15,7 @@ import java.util.List;
 
 @WebServlet(name = "ItemLoadCartServlet", value = "/addToCart")
 public class ItemLoadCartServlet extends HttpServlet {
-    private static final String DB_URL = "jdbc:mysql://localhost/Management_system";
+    private static final String DB_URL = "jdbc:mysql://localhost/ecommerce";
     private static final String DB_USER = "root";
     private static final String DB_PASSWORD = "Ijse@123";
 
@@ -37,7 +37,8 @@ public class ItemLoadCartServlet extends HttpServlet {
                         rst.getInt(1),
                         rst.getString(2),
                         rst.getInt(3),
-                        rst.getDouble(4)
+                        rst.getDouble(4),
+                        rst.getString(5)
                 );
                 productList.add(productDTO);
             }

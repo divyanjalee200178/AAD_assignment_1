@@ -21,10 +21,10 @@ import java.sql.SQLException;
 import java.util.UUID;
 
 @WebServlet(name = "CategorySaveServlet", value = "/category-save")
-@MultipartConfig(maxFileSize = 169999999)  // Max file size for uploads
+@MultipartConfig(maxFileSize = 169999999)
 public class CategorySaveServlet extends HttpServlet {
 
-    String DB_URL="jdbc:mysql://localhost/Management_system";
+    String DB_URL="jdbc:mysql://localhost/ecommerce";
     String DB_USER="root";
     String DB_PASSWORD="Ijse@123";
     private static final String UPLOAD_DIR = "uploads/images";

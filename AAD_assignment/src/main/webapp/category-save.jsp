@@ -131,9 +131,9 @@
             <ul class="navbar-nav ms-auto">
                 <li class="nav-item"><a class="nav-link" href="product-save.jsp">Item</a></li>
                 <li class="nav-item"><a class="nav-link" href="product-delete.jsp">Category</a></li>
-                <li class="nav-item"><a class="nav-link" href="customer-save.jsp">Customer</a></li>
+                <li class="nav-item"><a class="nav-link" href="user-save.jsp">Customer</a></li>
                 <li class="nav-item"><a class="nav-link" href="login.jsp">Login</a></li>
-                <li class="nav-item"><a class="nav-link" href="index">Logout</a></li>
+                <li class="nav-item"><a class="nav-link" href="placeOrder.jsp">Logout</a></li>
             </ul>
         </div>
     </div>
@@ -170,12 +170,12 @@
             <div class="action-section">
                 <div class="action-category">
                     <span>Do you want to delete a Category?</span>
-                    <a href="customer-delete.jsp" class="btn btn-danger btn-sm">Delete</a>
+                    <a href="category-delete.jsp" class="btn btn-danger btn-sm">Delete</a>
                 </div>
 
                 <div class="action-category">
                     <span>Do you want to update a Category?</span>
-                    <a href="customer-update.jsp" class="btn btn-success btn-sm">Update</a>
+                    <a href="category-update.jsp" class="btn btn-success btn-sm">Update</a>
                 </div>
 
                 <div class="action-category">

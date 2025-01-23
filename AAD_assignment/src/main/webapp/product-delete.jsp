@@ -75,7 +75,7 @@
             <ul class="navbar-nav ms-auto">
                 <li class="nav-item"><a class="nav-link" href="product-save.jsp">Item</a></li>
                 <li class="nav-item"><a class="nav-link" href="product-delete.jsp">Category</a></li>
-                <li class="nav-item"><a class="nav-link" href="customer-save.jsp">Customer</a></li>
+                <li class="nav-item"><a class="nav-link" href="user-save.jsp">Customer</a></li>
                 <li class="nav-item"><a class="nav-link" href="login.jsp">Login</a></li>
                 <li class="nav-item"><a class="nav-link" href="logout.jsp">Logout</a></li>
             </ul>

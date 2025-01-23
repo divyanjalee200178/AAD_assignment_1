@@ -18,7 +18,7 @@ import java.util.List;
 
 @WebServlet(name = "CategoryLoadIndexServlet", value = "/homeLoadCategories")
 public class CategoryLoadIndexServlet extends HttpServlet {
-    String DB_URL="jdbc:mysql://localhost/Management_system";
+    String DB_URL="jdbc:mysql://localhost/ecommerce";
     String DB_USER="root";
     String DB_PASSWORD="Ijse@123";
 

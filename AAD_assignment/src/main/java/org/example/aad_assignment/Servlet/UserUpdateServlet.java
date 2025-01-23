@@ -1,4 +1,4 @@
-package org.example.aad_assignment;
+package org.example.aad_assignment.Servlet;
 
 import jakarta.servlet.ServletException;
 import jakarta.servlet.annotation.WebServlet;
@@ -11,19 +11,19 @@ import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.PreparedStatement;
 
-@WebServlet(name = "CustomerUpdateServlet", value = "/customer-update")
-public class CustomerUpdateServlet extends HttpServlet {
-    String DB_URL="jdbc:mysql://localhost/Management_system";
+@WebServlet(name = "UserUpdateServlet", value = "/user-update")
+public class UserUpdateServlet extends HttpServlet {
+    String DB_URL="jdbc:mysql://localhost/ecommerce";
     String DB_USER="root";
     String DB_PASSWORD="Ijse@123";
 
     @Override
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-        String customer_id=req.getParameter("customer_id");
-        String customer_name=req.getParameter("customer_name");
-        String customer_email=req.getParameter("customer_email");
-        String customer_number=req.getParameter("customer_number");
-        String customer_password=req.getParameter("customer_password");
+        String user_id=req.getParameter("user_id");
+        String user_name=req.getParameter("user_name");
+        String user_email=req.getParameter("user_email");
+        String user_number=req.getParameter("user_number");
+        String user_password=req.getParameter("user_password");
 
         try {
             Class.forName("com.mysql.cj.jdbc.Driver");
@@ -32,30 +32,30 @@ public class CustomerUpdateServlet extends HttpServlet {
                     DB_USER,
                     DB_PASSWORD
             );
-            String sql="UPDATE customer SET name = ?, email = ? ,number = ? ,password = ? WHERE id = ?";
+            String sql="UPDATE users SET name = ?, email = ? ,number = ? ,password = ? WHERE id = ?";
             PreparedStatement pstm=connection.prepareStatement(sql);
 
-            pstm.setString(1,customer_name);
-            pstm.setString(2,customer_email);
-            pstm.setString(3,customer_number);
-            pstm.setString(4,customer_password);
-            pstm.setString(5,customer_id);
+            pstm.setString(1,user_name);
+            pstm.setString(2,user_email);
+            pstm.setString(3,user_number);
+            pstm.setString(4,user_password);
+            pstm.setString(5,user_id);
 
             int effectRowCount=pstm.executeUpdate();
 
             if (effectRowCount>0){
                 resp.sendRedirect(
-                        "customer-update.jsp?message=Customer update successfully"
+                        "user-update.jsp?message=Customer update successfully"
                 );
             }else {
                 resp.sendRedirect(
-                        "customer-update.jsp?error=Customer not updated"
+                        "user-update.jsp?error=Customer not updated"
                 );
             }
         }catch (Exception e){
             e.printStackTrace();
             resp.sendRedirect(
-                    "customer-update.jsp?error=Customer update unsuccessfully"
+                    "user-update.jsp?error=Customer update unsuccessfully"
             );
         }
 

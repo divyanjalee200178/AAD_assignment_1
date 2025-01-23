@@ -14,4 +14,5 @@ public class ProductDTO {
     String name;
     int qty;
     double unitPrice;
+    private String imagePath;
 }

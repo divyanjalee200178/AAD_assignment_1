@@ -1,4 +1,4 @@
-package org.example.aad_assignment;
+package org.example.aad_assignment.Servlet;
 
 import jakarta.servlet.RequestDispatcher;
 import jakarta.servlet.ServletException;
@@ -16,9 +16,9 @@ import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.List;
 
-@WebServlet(name = "CustomerViewServlet", value = "/customer-view")
-public class CustomerViewServlet extends HttpServlet {
-    String DB_URL="jdbc:mysql://localhost/Management_system";
+@WebServlet(name = "UserViewServlet", value = "/user-view")
+public class UserViewServlet extends HttpServlet {
+    String DB_URL="jdbc:mysql://localhost/ecommerce";
     String DB_USER="root";
     String DB_PASSWORD="Ijse@123";
 
@@ -32,7 +32,7 @@ public class CustomerViewServlet extends HttpServlet {
                     DB_USER,
                     DB_PASSWORD
             );
-            String sql="SELECT * FROM customer";
+            String sql="SELECT * FROM users";
             Statement stm=connection.createStatement();
             ResultSet rst=stm.executeQuery(sql);
             while (rst.next()){
@@ -47,14 +47,14 @@ public class CustomerViewServlet extends HttpServlet {
                 customerList.add(customerDTO);
             }
 
-            req.setAttribute("customers", customerList);
-            RequestDispatcher rd = req.getRequestDispatcher("customer-view.jsp");
+            req.setAttribute("users", customerList);
+            RequestDispatcher rd = req.getRequestDispatcher("user-view.jsp");
             rd.forward(req, resp);
 
         } catch (Exception e) {
             e.printStackTrace();
             req.setAttribute("error", "Error loading customers: " + e.getMessage());
-            RequestDispatcher rd = req.getRequestDispatcher("customer-view.jsp");
+            RequestDispatcher rd = req.getRequestDispatcher("user-view.jsp");
             rd.forward(req, resp);
         }
     }

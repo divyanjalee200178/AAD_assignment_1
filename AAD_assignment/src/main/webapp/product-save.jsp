@@ -145,9 +145,9 @@
             <ul class="navbar-nav ms-auto">
                 <li class="nav-item"><a class="nav-link" href="product-save.jsp">Item</a></li>
                 <li class="nav-item"><a class="nav-link" href="product-delete.jsp">Category</a></li>
-                <li class="nav-item"><a class="nav-link" href="customer-save.jsp">Customer</a></li>
+                <li class="nav-item"><a class="nav-link" href="user-save.jsp">Customer</a></li>
                 <li class="nav-item"><a class="nav-link" href="login.jsp">Login</a></li>
-                <li class="nav-item"><a class="nav-link" href="logout.jsp">Logout</a></li>
+                <li class="nav-item"><a class="nav-link" href="placeOrder.jsp">Logout</a></li>
             </ul>
         </div>
     </div>
@@ -159,7 +159,7 @@
             <h1 class="display-4">Item form</h1>
         </header>
     </div>
-    <form class="row g-3 p-3" action="product-save" method="post">
+    <form class="row g-3 p-3" action="product-save" method="post" enctype="multipart/form-data">
         <div class="col-md-6">
             <label for="name" class="form-label">Name</label>
             <input type="text" class="form-control" id="name" name="item_name">
@@ -172,6 +172,11 @@
         <div class="col-md-6">
             <label for="unit_price" class="form-label">Unit price</label>
             <input type="text" class="form-control" id="unit_price" name="item_unitPrice">
+        </div>
+
+        <div class="col-md-12">
+            <label for="image" class="form-label">Upload an Image:</label>
+            <input type="file" id="image" name="image" required>
         </div>
 
 

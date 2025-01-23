@@ -1,7 +1,6 @@
 <%@ page import="org.example.aad_assignment.DTO.CategoryDTO" %>
 <%@ page import="java.util.List" %><%--
   Created by IntelliJ IDEA.
-  User: Dilan Madusanka
   Date: 1/21/2025
   Time: 4:15 AM
   To change this template use File | Settings | File Templates.
@@ -11,6 +10,8 @@
 <head>
     <title>Load categories In to the Home page</title>
   <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+</head>
+
   <style>
     body {
       background-image: url('<%= request.getContextPath() %>/resources/images/d17.jpg');
@@ -126,7 +127,7 @@
       box-sizing: border-box;
     }
   </style>
-</head>
+
 
 <body>
 
@@ -142,7 +143,7 @@
     <div class="collapse navbar-collapse justify-content-end">
       <ul class="navbar-nav">
         <li class="nav-item"><a class="nav-link" href="login.jsp">Sign in</a></li>
-        <li class="nav-item"><a class="nav-link" href="customer-save.jsp">Sign up</a></li>
+        <li class="nav-item"><a class="nav-link" href="user-save.jsp">Sign up</a></li>
       </ul>
     </div>
   </div>

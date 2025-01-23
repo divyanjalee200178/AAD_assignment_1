@@ -1,18 +1,20 @@
-<%--
+<%@ page import="java.util.List" %>
+<%@ page import="java.sql.Connection" %>
+<%@ page import="java.sql.DriverManager" %>
+<%@ page import="java.sql.Statement" %>
+<%@ page import="java.sql.ResultSet" %><%--
   Created by IntelliJ IDEA.
-  User: Dilan Madusanka
   Date: 1/20/2025
   Time: 10:19 PM
   To change this template use File | Settings | File Templates.
 --%>
+
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <html>
 <head>
     <title>Place Order</title>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
 </head>
-
-
 <style>
     body {
         background-image: url('<%= request.getContextPath() %>/resources/images/d20.webp');
@@ -28,18 +30,16 @@
         margin-bottom: 30px;
     }
 
-    .container-section{
+    .container-section {
         background-color: white;
         padding: 30px;
         border-radius: 8px;
         box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
     }
 
-    form{
+    form {
         box-shadow: 2px 6px 100px white;
     }
-
-
 
     .action-section {
         display: flex;
@@ -106,31 +106,25 @@
     .btn-warning:hover {
         background-color: #e0a800;
     }
-
 </style>
 
 <body>
-
 <%
-    String message=request.getParameter("message");
-    String error=request.getParameter("error");
+    String message = request.getParameter("message");
+    String error = request.getParameter("error");
 %>
 <%
-    if (message!=null){
-
+    if (message != null) {
 %>
-<div style="color: green"><%=message%>
-</div>
+<div style="color: green"><%= message %></div>
 <%
     }
 %>
 
 <%
-    if (error!=null){
-
+    if (error != null) {
 %>
-<div style="color: red"><%=error%>
-</div>
+<div style="color: red"><%= error %></div>
 <%
     }
 %>
@@ -145,9 +139,9 @@
             <ul class="navbar-nav ms-auto">
                 <li class="nav-item"><a class="nav-link" href="product-save.jsp">Item</a></li>
                 <li class="nav-item"><a class="nav-link" href="product-delete.jsp">Category</a></li>
-                <li class="nav-item"><a class="nav-link" href="customer-save.jsp">Customer</a></li>
+                <li class="nav-item"><a class="nav-link" href="user-update.jsp">Profile</a></li>
                 <li class="nav-item"><a class="nav-link" href="login.jsp">Login</a></li>
-                <li class="nav-item"><a class="nav-link" href="customer-save.jsp">Logout</a></li>
+                <li class="nav-item"><a class="nav-link" href="">Logout</a></li>
             </ul>
         </div>
     </div>
@@ -159,28 +153,77 @@
             <h1 class="display-4">Item form</h1>
         </header>
     </div>
-    <form class="row g-3 p-3" action="place-order" method="post">
+    <form class="row g-3 p-3" >
+        <%
+            String predefinedDate = "2025-01-20";
+        %>
         <div class="col-md-6">
             <label for="date" class="form-label">Date</label>
-            <input type="text" class="form-control" id="date" name="item_name">
-        </div>
-        <div class="col-md-6">
-            <label for="inputState" class="form-label">Customer Name</label>
-            <select id="inputState" class="form-select">
-                <option selected>Choose...</option>
-                <option>...</option>
-            </select>
-        </div>
-        <div class="col-md-6">
-            <label for="name" class="form-label">Customer Id</label>
-            <input type="text" class="form-control" id="name" name="item_name">
+            <input type="date" class="form-control" id="date" name="date" value="<%= predefinedDate %>">
         </div>
 
         <div class="col-md-6">
-            <label for="inputName" class="form-label">Product Name</label>
-            <select id="inputName" class="form-select">
+            <label for="inputState" class="form-label">Customer Name</label>
+            <select id="inputState" class="form-select" name="customer_name">
                 <option selected>Choose...</option>
-                <option>...</option>
+                <%
+                    try {
+                        Class.forName("com.mysql.cj.jdbc.Driver");
+                        Connection connection = DriverManager.getConnection(
+                                "jdbc:mysql://localhost/ecommerce",
+                                "root",
+                                "Ijse@123"
+                        );
+                        Statement st = connection.createStatement();
+                        String query = "SELECT id, name FROM users WHERE role = 'customer'";
+
+                        ResultSet rst = st.executeQuery(query);
+                        while (rst.next()) {
+                %>
+                <option data-id="<%= rst.getString("id") %>"><%= rst.getString("name") %></option>
+                <%
+                        }
+                    } catch (Exception e) {
+                        e.printStackTrace();
+                    }
+                %>
+            </select>
+        </div>
+
+        <div class="col-md-6">
+            <label for="id" class="form-label">Customer Id</label>
+            <input type="text" class="form-control" id="id" name="customer_id">
+        </div>
+
+        <div class="col-md-6">
+            <label for="product" class="form-label">Product Name</label>
+            <select id="product" class="form-select" name="product_name">
+                <option selected>Choose...</option>
+                <%
+                    try {
+                        Class.forName("com.mysql.cj.jdbc.Driver");
+                        Connection connection = DriverManager.getConnection(
+                                "jdbc:mysql://localhost/ecommerce",
+                                "root",
+                                "Ijse@123"
+                        );
+                        Statement statement = connection.createStatement();
+                        String query = "SELECT code, name, qty, unitPrice FROM product";
+                        ResultSet resultSet = statement.executeQuery(query);
+                        while (resultSet.next()) {
+                %>
+                <option
+                        data-code="<%= resultSet.getString("code") %>"
+                        data-qty="<%= resultSet.getInt("qty") %>"
+                        data-unitPrice="<%= resultSet.getDouble("unitPrice") %>">
+                    <%= resultSet.getString("name") %>
+                </option>
+                <%
+                        }
+                    } catch (Exception e) {
+                        e.printStackTrace();
+                    }
+                %>
             </select>
         </div>
 
@@ -194,20 +237,66 @@
             <input type="text" class="form-control" id="unit_price" name="item_unitPrice">
         </div>
 
-
+        <div class="col-md-6">
+            <label for="quantity" class="form-label">QtyOnHand</label>
+            <input type="number" class="form-control" id="quantity" name="item_quantity">
+        </div>
 
         <div class="col-12 text-center mt-4">
             <div>
                 <button type="submit" class="btn btn-primary btn-lg w-50 mb-3">Add to cart</button>
             </div>
         </div>
-
-
     </form>
-
 </section>
 
+<section class="container my-3 bg-light p-3">
+    <header class="text-center">
+        <h2>Cart Details</h2>
+    </header>
+    <table class="table table-bordered table-striped mt-3" id="cartTable">
+        <thead class="table-dark">
+        <tr>
+            <th>Customer ID</th>
+            <th>Customer Name</th>
+            <th>Product Name</th>
+            <th>Quantity</th>
+            <th>Unit Price</th>
+            <th>Total Price</th>
+            <th>Action</th>
+        </tr>
+        </thead>
+        <tbody></tbody>
+    </table>
+</section>
 
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+
+<script>
+    document.getElementById("inputState").addEventListener("change", function() {
+        var customerNameSelect = this;
+        var customerIdInput = document.getElementById("id");
+
+        var selectedOption = customerNameSelect.options[customerNameSelect.selectedIndex];
+
+        var customerId = selectedOption.getAttribute("data-id");
+
+        customerIdInput.value = customerId;
+    });
+
+
+    document.getElementById("product").addEventListener("change", function () {
+        var productSelect = this;
+        var selectedOption = productSelect.options[productSelect.selectedIndex];
+        var productQty = selectedOption.getAttribute("data-qty");
+        var productUnitPrice = selectedOption.getAttribute("data-unitPrice");
+        document.getElementById("qty").value = productQty || "";
+        document.getElementById("unit_price").value = productUnitPrice || "";
+    });
+</script>
+
+
+
+
 </body>
 </html>

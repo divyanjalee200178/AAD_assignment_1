@@ -81,7 +81,7 @@
 <%--                <div class="feature-card">--%>
 <%--                    <h4>Customer Management</h4>--%>
 <%--                    <p>Handle customer details and transactions with ease.</p>--%>
-<%--                    <a href="customer-save.jsp" class="btn btn-light">Explore</a>--%>
+<%--                    <a href="user-save.jsp" class="btn btn-light">Explore</a>--%>
 <%--                </div>--%>
 <%--            </div>--%>
 <%--            <div class="col-md-4">--%>
@@ -192,7 +192,7 @@
             <ul class="navbar-nav ms-auto">
                 <li class="nav-item"><a class="nav-link" href="product-save.jsp">Item</a></li>
                 <li class="nav-item"><a class="nav-link" href="product-delete.jsp">Category</a></li>
-                <li class="nav-item"><a class="nav-link" href="customer-save.jsp">Customer</a></li>
+                <li class="nav-item"><a class="nav-link" href="user-save.jsp">Customer</a></li>
                 <li class="nav-item"><a class="nav-link" href="login.jsp">Login</a></li>
                 <li class="nav-item"><a class="nav-link" href="logout.jsp">Logout</a></li>
             </ul>

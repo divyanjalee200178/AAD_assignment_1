@@ -1,4 +1,4 @@
-package org.example.aad_assignment;
+package org.example.aad_assignment.Servlet;
 
 import jakarta.servlet.http.HttpServlet;
 
