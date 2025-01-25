@@ -7,8 +7,7 @@
 
 <style>
   body {
-  background-image: url('<%= request.getContextPath() %>/resources/images/d17.jpg');
-    background-color: #3b0b0b;
+    background-color: lightslategray;
     background-size: cover;
     background-repeat: no-repeat;
     background-attachment: fixed;
@@ -30,19 +29,25 @@
     border: 1px solid #007bff;
   }
 
-  .navbar .btn-outline-success {
-    border-color: #00ff7f;
-    color: #00ff7f;
+  main {
+    padding-top:0;
   }
 
-  .navbar .btn-outline-success:hover {
-    background-color: #00ff7f;
-    color: white;
-  }
 
+  .carousel-item img {
+    width: 100%;
+    height: 70vh;
+    object-fit: cover;
+  }
+  .card {
+    box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px;
+  }
+  .footer-cta {
+    box-shadow: rgba(0, 0, 0, 0.15) 0px 5px 15px;
+  }
   .container {
-    margin-top: 150px;
-    padding: 15px;
+    margin-top: 50px;
+    padding: 5px;
     background: rgba(255, 255, 255, 0.3);
     border-radius: 10px;
     box-shadow: 0 4px 30px rgba(0, 0, 0, 0.1);
@@ -137,105 +142,199 @@
     <div class="collapse navbar-collapse justify-content-end">
       <ul class="navbar-nav">
         <li class="nav-item"><a class="nav-link" href="login.jsp">SignIn</a></li>
-        <li class="nav-item"><a class="nav-link" href="signUp.jsp">SignUp</a></li>
+        <li class="nav-item"><a class="nav-link" href="placeOrder.jsp">SignUp</a></li>
       </ul>
     </div>
   </div>
 </nav>
 
-<div class="container">
-  <div class="action-customer">
-    <span>Do you want to view available Categories?</span>
-    <a href="homeLoadCategories" class="btn btn-warning btn-sm">View</a>
+<div id="carouselExampleCaptions" class="carousel slide carousel-fade" data-mdb-ride="carousel">
+  <div class="carousel-indicators">
+    <button
+            type="button"
+            data-mdb-target="#carouselExampleCaptions"
+            data-mdb-slide-to="0"
+            class="active"
+            aria-current="true"
+            aria-label="Slide 1"
+    ></button>
+    <button
+            type="button"
+            data-mdb-target="#carouselExampleCaptions"
+            data-mdb-slide-to="1"
+            aria-label="Slide 2"
+    ></button>
+    <button
+            type="button"
+            data-mdb-target="#carouselExampleCaptions"
+            data-mdb-slide-to="2"
+            aria-label="Slide 3"
+    ></button>
   </div>
-  <div class="row">
-    <div class="col-md-3">
-      <div class="card">
-        <img src="<%= request.getContextPath() %>/resources/images/d24.jpg" class="card-img-top" alt="Butter">
-        <div class="card-body">
-          <h5 class="card-title">Watches</h5>
-          <p class="card-text">You can choose the brands you want.</p>
-          <a href="addToCart" class="btn btn-primary">See more</a>
-        </div>
-      </div>
-    </div>
-    <div class="col-md-3">
-      <div class="card">
-        <img src="<%= request.getContextPath() %>/resources/images/d25.jpg" class="card-img-top" alt="Juice">
-        <div class="card-body">
-          <h5 class="card-title">Bags</h5>
-          <p class="card-text">You can choose the brands you want.</p>
-          <a href="addToCart" class="btn btn-primary">See more</a>
-        </div>
-      </div>
-    </div>
-    <div class="col-md-3">
-      <div class="card">
-        <img src="<%= request.getContextPath() %>/resources/images/d26.jpg" class="card-img-top" alt="Cookies">
-        <div class="card-body">
-          <h5 class="card-title">Beauty products</h5>
-          <p class="card-text">You can choose the brands you want.</p>
-          <a href="addToCart" class="btn btn-primary">See more</a>
-        </div>
-      </div>
-    </div>
-    <div class="col-md-3">
-      <div class="card">
-        <img src="<%= request.getContextPath() %>/resources/images/d12.jpg" class="card-img-top" alt="Jewellery">
-        <div class="card-body">
-          <h5 class="card-title">Jewellery</h5>
-          <p class="card-text">You can choose the brands you want.</p>
-          <a href="addToCart" class="btn btn-primary">See more</a>
-        </div>
-      </div>
-    </div>
+  <div class="carousel-inner">
+    <div class="carousel-item active">
+      <img src="<%= request.getContextPath() %>/resources/images/d18.jpg" alt="Description">
+      <div class="mask" style="background-color: rgba(0, 0, 0, 0.4)"></div>
+      <div class="carousel-caption d-none d-sm-block mb-5">
+        <h1 class="mb-4">
+          <strong style="color: #e74c3c;">Welcome to Our <span style="color: #f39c12;">Online Store</span>!</strong>
+        </h1>
 
-    <div class="col-md-3">
-      <div class="card">
-        <img src="<%= request.getContextPath() %>/resources/images/d27.jpg" class="card-img-top" alt="Jewellery">
-        <div class="card-body">
-          <h5 class="card-title">Bottle</h5>
-          <p class="card-text">You can choose the brands you want.</p>
-          <a href="addToCart" class="btn btn-primary">See more</a>
-        </div>
+        <p>
+          <strong style="color: #f39c12;">Shop the best collection of <span style="color: #e74c3c;">watches</span>, <span style="color: #e74c3c;">bags</span>, and <span style="color: #e74c3c;">bottles</span>.</strong>
+        </p>
+
+        <p class="mb-4 d-none d-md-block">
+          <strong style="color: #02011b;">Find premium quality products at unbeatable prices. Browse our top-selling categories and discover your next favorite item!</strong>
+        </p>
+
+
       </div>
     </div>
+    <div class="carousel-item">
+      <img src="<%= request.getContextPath() %>/resources/images/d18.jpg" alt="Description">
 
-    <div class="col-md-3">
-      <div class="card">
-        <img src="<%= request.getContextPath() %>/resources/images/d28.jpeg" class="card-img-top" alt="Biscuits">
-        <div class="card-body">
-          <h5 class="card-title">Toys</h5>
-          <p class="card-text">You can choose the brands you want.</p>
-          <a href="addToCart" class="btn btn-primary">See more</a>
-        </div>
+      <div class="mask" style="background-color: rgba(0, 0, 0, 0.4)"></div>
+      <div class="carousel-caption d-none d-md-block mb-5">
+        <h1 class="mb-4">
+          <strong style="color: #e74c3c;">Welcome to Our <span style="color: #f39c12;">Online Store</span>!</strong>
+        </h1>
+
+        <p>
+          <strong style="color: #f39c12;">Shop the best collection of <span style="color: #e74c3c;">watches</span>, <span style="color: #e74c3c;">bags</span>, and <span style="color: #e74c3c;">bottles</span>.</strong>
+        </p>
+
+        <p class="mb-4 d-none d-md-block">
+          <strong style="color: #02011b;">Find premium quality products at unbeatable prices. Browse our top-selling categories and discover your next favorite item!</strong>
+        </p>
+
+
       </div>
-    </div>
 
-    <div class="col-md-3">
-      <div class="card">
-        <img src="<%= request.getContextPath() %>/resources/images/d10.jpg" class="card-img-top" alt="Shoes">
-        <div class="card-body">
-          <h5 class="card-title">Shoes</h5>
-          <p class="card-text">You can choose the brands you want.</p>
-          <a href="addToCart" class="btn btn-primary">See more</a>
-        </div>
-      </div>
-    </div>
 
-    <div class="col-md-3">
-      <div class="card">
-        <img src="<%= request.getContextPath() %>/resources/images/d11.jpg" class="card-img-top" alt="Clothes">
-        <div class="card-body">
-          <h5 class="card-title">Clothes</h5>
-          <p class="card-text">You can choose the brands you want.</p>
-          <a href="addToCart" class="btn btn-primary">See more</a>
-        </div>
-      </div>
     </div>
-
   </div>
+  <button class="carousel-control-prev" type="button" data-mdb-target="#carouselExampleCaptions" data-mdb-slide="prev">
+    <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+    <span class="visually-hidden">Previous</span>
+  </button>
+  <button class="carousel-control-next" type="button" data-mdb-target="#carouselExampleCaptions" data-mdb-slide="next">
+    <span class="carousel-control-next-icon" aria-hidden="true"></span>
+    <span class="visually-hidden">Next</span>
+  </button>
 </div>
+
+
+<main>
+  <div class="container">
+    <div class="action-customer">
+      <span>Do you want to view available Categories?</span>
+      <a href="homeLoadCategories">View</a>
+
+    </div>
+    <div class="row">
+      <div class="col-md-3">
+        <div class="card">
+          <img src="<%= request.getContextPath() %>/resources/images/d24.jpg" class="card-img-top" alt="Butter">
+          <div class="card-body">
+            <h5 class="card-title">Watches</h5>
+            <p class="card-text">You can choose the brands you want.</p>
+            <a href="addToCart" class="btn btn-primary">See more</a>
+          </div>
+        </div>
+      </div>
+      <div class="col-md-3">
+        <div class="card">
+          <img src="<%= request.getContextPath() %>/resources/images/d25.jpg" class="card-img-top" alt="Juice">
+          <div class="card-body">
+            <h5 class="card-title">Bags</h5>
+            <p class="card-text">You can choose the brands you want.</p>
+            <a href="addToCart" class="btn btn-primary">See more</a>
+          </div>
+        </div>
+      </div>
+      <div class="col-md-3">
+        <div class="card">
+          <img src="<%= request.getContextPath() %>/resources/images/d26.jpg" class="card-img-top" alt="Cookies">
+          <div class="card-body">
+            <h5 class="card-title">Beauty products</h5>
+            <p class="card-text">You can choose the brands you want.</p>
+            <a href="addToCart" class="btn btn-primary">See more</a>
+          </div>
+        </div>
+      </div>
+      <div class="col-md-3">
+        <div class="card">
+          <img src="<%= request.getContextPath() %>/resources/images/d12.jpg" class="card-img-top" alt="Jewellery">
+          <div class="card-body">
+            <h5 class="card-title">Jewellery</h5>
+            <p class="card-text">You can choose the brands you want.</p>
+            <a href="addToCart" class="btn btn-primary">See more</a>
+          </div>
+        </div>
+      </div>
+
+      <div class="col-md-3">
+        <div class="card">
+          <img src="<%= request.getContextPath() %>/resources/images/d27.jpg" class="card-img-top" alt="Jewellery">
+          <div class="card-body">
+            <h5 class="card-title">Bottle</h5>
+            <p class="card-text">You can choose the brands you want.</p>
+            <a href="addToCart" class="btn btn-primary">See more</a>
+          </div>
+        </div>
+      </div>
+
+      <div class="col-md-3">
+        <div class="card">
+          <img src="<%= request.getContextPath() %>/resources/images/d28.jpeg" class="card-img-top" alt="Biscuits">
+          <div class="card-body">
+            <h5 class="card-title">Toys</h5>
+            <p class="card-text">You can choose the brands you want.</p>
+            <a href="addToCart" class="btn btn-primary">See more</a>
+          </div>
+        </div>
+      </div>
+
+      <div class="col-md-3">
+        <div class="card">
+          <img src="<%= request.getContextPath() %>/resources/images/d10.jpg" class="card-img-top" alt="Shoes">
+          <div class="card-body">
+            <h5 class="card-title">Shoes</h5>
+            <p class="card-text">You can choose the brands you want.</p>
+            <a href="addToCart" class="btn btn-primary">See more</a>
+          </div>
+        </div>
+      </div>
+
+      <div class="col-md-3">
+        <div class="card">
+          <img src="<%= request.getContextPath() %>/resources/images/d11.jpg" class="card-img-top" alt="Clothes">
+          <div class="card-body">
+            <h5 class="card-title">Clothes</h5>
+            <p class="card-text">You can choose the brands you want.</p>
+            <a href="addToCart" class="btn btn-primary">See more</a>
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</main>
+
+
+<footer class="text-center text-white mt-4" style="background-color: #607D8B">
+
+  <div class="pt-4 pb-2">
+    <a class="btn btn-outline-white footer-cta mx-2" href="https://mdbootstrap.com/docs/jquery/getting-started/download/" target="_blank" role="button">Download MDB
+      <i class="fas fa-download ms-2"></i>
+    </a>
+    <a class="btn btn-outline-white footer-cta mx-2" href="https://mdbootstrap.com/education/bootstrap/" target="_blank" role="button">Start free tutorial
+      <i class="fas fa-graduation-cap ms-2"></i>
+    </a>
+  </div>
+
+</footer>
 
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
 </body>

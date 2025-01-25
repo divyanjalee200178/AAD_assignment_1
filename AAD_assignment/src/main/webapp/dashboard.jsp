@@ -1,3 +1,6 @@
+<%@ page import="org.example.aad_assignment.Servlet.CategoryService" %>
+<%@ page import="org.example.aad_assignment.DTO.CategoryDTO" %>
+<%@ page import="java.util.List" %>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <html>
 <head>
@@ -215,79 +218,31 @@
     </div>
 
     <section class="container my-2">
-        <div id="set">
-            <div class="card">
-                <img src="<%= request.getContextPath() %>/resources/images/d24.jpg" class="card-img-top" alt="Butter">
-                <div class="card-body">
-                    <h5 class="card-title">Watches</h5>
-                    <p class="card-text">You can choose the brands you want.</p>
-                    <a href="addToCart" class="btn btn-primary">See more</a>
-                </div>
-            </div>
+        <div id="set text-center">
+                <h2 class="mb-5" style="color: black; font-size: 2.5rem;">Available Categories</h2>
 
-            <div class="card">
-                <img src="<%= request.getContextPath() %>/resources/images/d25.jpg" class="card-img-top" alt="Juice">
-                <div class="card-body">
-                    <h5 class="card-title">Bags</h5>
-                    <p class="card-text">You can choose the brands you want.</p>
-                    <a href="addToCart" class="btn btn-primary">See more</a>
+                <div class="row justify-content-center">
+                    <%
+                        CategoryService categoryService = new CategoryService();
+                        List<CategoryDTO> categories = categoryService.getCategories();
+                        for (CategoryDTO category : categories) {
+                    %>
+                    <div class="col-md-4 mb-5">
+                        <div class="card category-card">
+                            <img src="<%= category.getImagePath() %>" class="card-img-top" alt="<%= category.getName() %>">
+                            <div class="card-body">
+                                <h5 class="card-title" style="font-size: 1.5rem; color: darkred;"><%= category.getName() %></h5>
+                                <p class="card-text" style="font-size: 1rem; color: blue;"><%= category.getQty() %> items available</p>
+                                <a href="addToCart?category=<%= category.getCode() %>" class="btn btn-warning mt-3">Shop Now</a>
+                            </div>
+                        </div>
+                    </div>
+                    <%
+                        }
+                    %>
                 </div>
-            </div>
-
-            <div class="card">
-                <img src="<%= request.getContextPath() %>/resources/images/d26.jpg" class="card-img-top" alt="Cookies">
-                <div class="card-body">
-                    <h5 class="card-title">Beauty products</h5>
-                    <p class="card-text">You can choose the brands you want.</p>
-                    <a href="addToCart" class="btn btn-primary">See more</a>
-                </div>
-            </div>
-
-            <div class="card">
-                <img src="<%= request.getContextPath() %>/resources/images/d12.jpg" class="card-img-top" alt="Jewellery">
-                <div class="card-body">
-                    <h5 class="card-title">Jewellery</h5>
-                    <p class="card-text">You can choose the brands you want.</p>
-                    <a href="addToCart" class="btn btn-primary">See more</a>
-                </div>
-            </div>
-
-            <div class="card">
-                <img src="<%= request.getContextPath() %>/resources/images/d27.jpg" class="card-img-top" alt="Jewellery">
-                <div class="card-body">
-                    <h5 class="card-title">Bottle</h5>
-                    <p class="card-text">You can choose the brands you want.</p>
-                    <a href="addToCart" class="btn btn-primary">See more</a>
-                </div>
-            </div>
-
-            <div class="card">
-                <img src="<%= request.getContextPath() %>/resources/images/d28.jpeg" class="card-img-top" alt="Biscuits">
-                <div class="card-body">
-                    <h5 class="card-title">Toys</h5>
-                    <p class="card-text">You can choose the brands you want.</p>
-                    <a href="addToCart" class="btn btn-primary">See more</a>
-                </div>
-            </div>
-
-            <div class="card">
-                <img src="<%= request.getContextPath() %>/resources/images/d10.jpg" class="card-img-top" alt="Shoes">
-                <div class="card-body">
-                    <h5 class="card-title">Shoes</h5>
-                    <p class="card-text">You can choose the brands you want.</p>
-                    <a href="addToCart" class="btn btn-primary">See more</a>
-                </div>
-            </div>
-
-            <div class="card">
-                <img src="<%= request.getContextPath() %>/resources/images/d11.jpg" class="card-img-top" alt="Clothes">
-                <div class="card-body">
-                    <h5 class="card-title">Clothes</h5>
-                    <p class="card-text">You can choose the brands you want.</p>
-                    <a href="addToCart" class="btn btn-primary">See more</a>
-                </div>
-            </div>
         </div>
+
     </section>
 </div>
 

@@ -1,5 +1,6 @@
 <%@ page import="org.example.aad_assignment.DTO.CategoryDTO" %>
-<%@ page import="java.util.List" %><%--
+<%@ page import="java.util.List" %>
+<%@ page import="org.example.aad_assignment.Servlet.CategoryService" %><%--
   Created by IntelliJ IDEA.
   User: Dilan Madusanka
   Date: 1/22/2025
@@ -154,98 +155,30 @@
     </div>
 </nav>
 
-<div class="container">
-    <div class="action-customer">
-        <span>Do you want to view available Categories?</span>
-        <a href="homeLoadCategories" class="btn btn-warning btn-sm">View</a>
+<div class="container text-center">
+    <h2 class="mb-5" style="color: #e74c3c; font-size: 2.5rem;">Available Categories</h2>
+
+    <div class="row justify-content-center">
+        <%
+            CategoryService categoryService = new CategoryService();
+            List<CategoryDTO> categories = categoryService.getCategories();
+            for (CategoryDTO category : categories) {
+        %>
+        <div class="col-md-4 mb-5">
+            <div class="card category-card">
+                <img src="<%= category.getImagePath() %>" class="card-img-top" alt="<%= category.getName() %>">
+                <div class="card-body">
+                    <h5 class="card-title" style="font-size: 1.5rem; color: darkred;"><%= category.getName() %></h5>
+                    <p class="card-text" style="font-size: 1rem; color: blue;"><%= category.getQty() %> items available</p>
+                    <a href="addToCart?category=<%= category.getCode() %>" class="btn btn-warning mt-3">Shop Now</a>
+                </div>
+            </div>
+        </div>
+        <%
+            }
+        %>
     </div>
-    <div class="row">
-        <div class="col-md-3">
-            <div class="card">
-                <img src="<%= request.getContextPath() %>/resources/images/d24.jpg" class="card-img-top" alt="Butter">
-                <div class="card-body">
-                    <h5 class="card-title">Watches</h5>
-                    <p class="card-text">You can choose the brands you want.</p>
-                    <a href="addToCart" class="btn btn-primary">See more</a>
-                </div>
-            </div>
-        </div>
-        <div class="col-md-3">
-            <div class="card">
-                <img src="<%= request.getContextPath() %>/resources/images/d25.jpg" class="card-img-top" alt="Juice">
-                <div class="card-body">
-                    <h5 class="card-title">Bags</h5>
-                    <p class="card-text">You can choose the brands you want.</p>
-                    <a href="addToCart" class="btn btn-primary">See more</a>
-                </div>
-            </div>
-        </div>
-        <div class="col-md-3">
-            <div class="card">
-                <img src="<%= request.getContextPath() %>/resources/images/d26.jpg" class="card-img-top" alt="Cookies">
-                <div class="card-body">
-                    <h5 class="card-title">Beauty products</h5>
-                    <p class="card-text">You can choose the brands you want.</p>
-                    <a href="addToCart" class="btn btn-primary">See more</a>
-                </div>
-            </div>
-        </div>
-        <div class="col-md-3">
-            <div class="card">
-                <img src="<%= request.getContextPath() %>/resources/images/d12.jpg" class="card-img-top" alt="Jewellery">
-                <div class="card-body">
-                    <h5 class="card-title">Jewellery</h5>
-                    <p class="card-text">You can choose the brands you want.</p>
-                    <a href="addToCart" class="btn btn-primary">See more</a>
-                </div>
-            </div>
-        </div>
 
-        <div class="col-md-3">
-            <div class="card">
-                <img src="<%= request.getContextPath() %>/resources/images/d27.jpg" class="card-img-top" alt="Jewellery">
-                <div class="card-body">
-                    <h5 class="card-title">Bottle</h5>
-                    <p class="card-text">You can choose the brands you want.</p>
-                    <a href="addToCart" class="btn btn-primary">See more</a>
-                </div>
-            </div>
-        </div>
-
-        <div class="col-md-3">
-            <div class="card">
-                <img src="<%= request.getContextPath() %>/resources/images/d28.jpeg" class="card-img-top" alt="Biscuits">
-                <div class="card-body">
-                    <h5 class="card-title">Toys</h5>
-                    <p class="card-text">You can choose the brands you want.</p>
-                    <a href="addToCart" class="btn btn-primary">See more</a>
-                </div>
-            </div>
-        </div>
-
-        <div class="col-md-3">
-            <div class="card">
-                <img src="<%= request.getContextPath() %>/resources/images/d10.jpg" class="card-img-top" alt="Shoes">
-                <div class="card-body">
-                    <h5 class="card-title">Shoes</h5>
-                    <p class="card-text">You can choose the brands you want.</p>
-                    <a href="addToCart" class="btn btn-primary">See more</a>
-                </div>
-            </div>
-        </div>
-
-        <div class="col-md-3">
-            <div class="card">
-                <img src="<%= request.getContextPath() %>/resources/images/d11.jpg" class="card-img-top" alt="Clothes">
-                <div class="card-body">
-                    <h5 class="card-title">Clothes</h5>
-                    <p class="card-text">You can choose the brands you want.</p>
-                    <a href="addToCart" class="btn btn-primary">See more</a>
-                </div>
-            </div>
-        </div>
-
-    </div>
 </div>
 
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>

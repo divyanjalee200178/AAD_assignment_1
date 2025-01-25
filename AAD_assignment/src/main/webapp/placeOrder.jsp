@@ -2,7 +2,9 @@
 <%@ page import="java.sql.Connection" %>
 <%@ page import="java.sql.DriverManager" %>
 <%@ page import="java.sql.Statement" %>
-<%@ page import="java.sql.ResultSet" %><%--
+<%@ page import="java.sql.ResultSet" %>
+<%@ page import="java.util.HashMap" %>
+<%@ page import="org.example.aad_assignment.DTO.CartItemDTO" %><%--
   Created by IntelliJ IDEA.
   Date: 1/20/2025
   Time: 10:19 PM
@@ -85,27 +87,7 @@
         color: #fff;
     }
 
-    .btn-danger:hover {
-        background-color: #bb2d3b;
-    }
 
-    .btn-success {
-        background-color: #28a745;
-        color: #fff;
-    }
-
-    .btn-success:hover {
-        background-color: #218838;
-    }
-
-    .btn-warning {
-        background-color: #ffc107;
-        color: #212529;
-    }
-
-    .btn-warning:hover {
-        background-color: #e0a800;
-    }
 </style>
 
 <body>
@@ -153,7 +135,7 @@
             <h1 class="display-4">Item form</h1>
         </header>
     </div>
-    <form class="row g-3 p-3" >
+    <form class="row g-3 p-3" action="CartServlet" method="post">
         <%
             String predefinedDate = "2025-01-20";
         %>
@@ -242,6 +224,8 @@
             <input type="number" class="form-control" id="quantity" name="item_quantity">
         </div>
 
+
+
         <div class="col-12 text-center mt-4">
             <div>
                 <button type="submit" class="btn btn-primary btn-lg w-50 mb-3">Add to cart</button>
@@ -257,18 +241,42 @@
     <table class="table table-bordered table-striped mt-3" id="cartTable">
         <thead class="table-dark">
         <tr>
-            <th>Customer ID</th>
-            <th>Customer Name</th>
+            <th>CustomerId</th>
             <th>Product Name</th>
             <th>Quantity</th>
             <th>Unit Price</th>
             <th>Total Price</th>
-            <th>Action</th>
         </tr>
         </thead>
-        <tbody></tbody>
+        <tbody>
+        <%
+            List<CartItemDTO> cart = (List<CartItemDTO>) session.getAttribute("cart");
+            if (cart != null) {
+                for (CartItemDTO item : cart) {
+        %>
+        <tr>
+            <td><%= item.getCustomerId() %></td>
+            <td><%= item.getProductName() %></td>
+            <td><%= item.getQuantity() %></td>
+            <td><%= item.getUnitPrice() %></td>
+            <td><%= item.getTotalPrice() %></td>
+        </tr>
+        <%
+            }
+        } else {
+        %>
+        <tr><td colspan="4" class="text-center">No items in cart</td></tr>
+        <% } %>
+        </tbody>
     </table>
+
+    <div class="text-center">
+        <form action="PlaceOrderServlet" method="post">
+            <button type="submit" class="btn btn-success btn-lg">Place Order</button>
+        </form>
+    </div>
 </section>
+
 
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
 

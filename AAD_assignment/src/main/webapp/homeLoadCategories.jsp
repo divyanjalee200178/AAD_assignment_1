@@ -12,121 +12,127 @@
   <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
 </head>
 
-  <style>
-    body {
-      background-image: url('<%= request.getContextPath() %>/resources/images/d17.jpg');
-      background-size: cover;
-      background-repeat: no-repeat;
-      background-attachment: fixed;
-      font-family: 'Arial', sans-serif;
-      margin: 0;
-      padding: 0;
-    }
+<style>
+  body {
+    background-color: lightslategray;
+    background-size: cover;
+    background-repeat: no-repeat;
+    background-attachment: fixed;
+    font-family: 'Arial', sans-serif;
+    margin: 0;
+    padding: 0;
+  }
 
-    .navbar {
-      position: fixed;
-      top: 0;
-      width: 100%;
-      z-index: 1000;
-      background: rgba(0, 0, 0, 0.9);
-      box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
-    }
+  .navbar {
+    position: fixed;
+    top: 0;
+    width: 100%;
+    z-index: 1000;
+    background: rgba(0, 0, 0, 0.9);
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+  }
 
-    .navbar .form-control {
-      border: 1px solid #007bff;
-    }
+  .navbar .form-control {
+    border: 1px solid #007bff;
+  }
 
-    .navbar .btn-outline-success {
-      border-color: #00ff7f;
-      color: #00ff7f;
-    }
+  main {
+    padding-top:0;
+  }
 
-    .navbar .btn-outline-success:hover {
-      background-color: #00ff7f;
-      color: white;
-    }
 
-    .container {
-      margin-top: 150px;
-      padding: 15px;
-      background: rgba(255, 255, 255, 0.3);
-      border-radius: 10px;
-      box-shadow: 0 4px 30px rgba(0, 0, 0, 0.1);
-      backdrop-filter: blur(10px);
-      -webkit-backdrop-filter: blur(10px);
-      border: 1px solid rgba(255, 255, 255, 0.18);
-      max-width: 1200px;
-      margin-left: auto;
-      margin-right: auto;
-    }
+  .carousel-item img {
+    width: 100%;
+    height: 70vh;
+    object-fit: cover;
+  }
+  .card {
+    box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px;
+  }
+  .footer-cta {
+    box-shadow: rgba(0, 0, 0, 0.15) 0px 5px 15px;
+  }
+  .container {
+    margin-top: 50px;
+    padding: 5px;
+    background: rgba(255, 255, 255, 0.3);
+    border-radius: 10px;
+    box-shadow: 0 4px 30px rgba(0, 0, 0, 0.1);
+    backdrop-filter: blur(10px);
+    -webkit-backdrop-filter: blur(10px);
+    border: 1px solid rgba(255, 255, 255, 0.18);
+    max-width: 1200px;
+    margin-left: auto;
+    margin-right: auto;
+  }
 
-    .card {
-      width: 100%;
-      margin: 10px 0;
-      transition: all 0.3s ease;
-      /*border: 4px solid white;*/
-      border-radius: 10px;
-      /*box-shadow: 2px 2px 8px rgba(0, 0, 0, 0.6);*/
-      background: rgba(255, 255, 255, 0.3);
-      box-shadow: 0 4px 30px rgba(0, 0, 0, 0.1);
-      backdrop-filter: blur(10px);
-      -webkit-backdrop-filter: blur(10px);
-      border: 1px solid rgba(255, 255, 255, 0.18);
-    }
+  .card {
+    width: 100%;
+    margin: 10px 0;
+    transition: all 0.3s ease;
+    /*border: 4px solid white;*/
+    border-radius: 10px;
+    /*box-shadow: 2px 2px 8px rgba(0, 0, 0, 0.6);*/
+    background: rgba(255, 255, 255, 0.3);
+    box-shadow: 0 4px 30px rgba(0, 0, 0, 0.1);
+    backdrop-filter: blur(10px);
+    -webkit-backdrop-filter: blur(10px);
+    border: 1px solid rgba(255, 255, 255, 0.18);
+  }
 
-    .row {
-      display: flex;
-      flex-wrap: wrap;
-      justify-content: space-between;
-    }
+  .row {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
+  }
 
-    .card:hover {
-      transform: scale(1.05);
-      box-shadow: 0px 6px 10px rgba(0, 0, 0, 0.2);
-    }
+  .card:hover {
+    transform: scale(1.05);
+    box-shadow: 0px 6px 10px rgba(0, 0, 0, 0.2);
+  }
 
-    .card img {
-      width: 100%;
-      height: 150px;
-      object-fit: cover;
-      border-top-left-radius: 8px;
-      border-top-right-radius: 8px;
-    }
+  .card img {
+    width: 100%;
+    height: 150px;
+    object-fit: cover;
+    border-top-left-radius: 8px;
+    border-top-right-radius: 8px;
+  }
 
-    .card-body {
-      background-color: #fff;
-      padding: 20px;
-      text-align: center;
-      border-bottom-left-radius: 8px;
-      border-bottom-right-radius: 8px;
-    }
+  .card-body {
+    background-color: #fff;
+    padding: 20px;
+    text-align: center;
+    border-bottom-left-radius: 8px;
+    border-bottom-right-radius: 8px;
+  }
 
-    .card-title {
-      font-size: 1.25rem;
-      font-weight: bold;
-      color: #343a40;
-    }
+  .card-title {
+    font-size: 1.25rem;
+    font-weight: bold;
+    color: #343a40;
+  }
 
-    .card-text {
-      font-size: 0.9rem;
-      color: #6c757d;
-    }
+  .card-text {
+    font-size: 0.9rem;
+    color: #6c757d;
+  }
 
-    .btn-primary {
-      background-color: #007bff;
-      border: none;
-      transition: background-color 0.3s ease;
-    }
+  .btn-primary {
+    background-color: #007bff;
+    border: none;
+    transition: background-color 0.3s ease;
+  }
 
-    .btn-primary:hover {
-      background-color: #0056b3;
-    }
+  .btn-primary:hover {
+    background-color: #0056b3;
+  }
 
-    .col-md-3 {
-      flex: 1 1 22%;
-      box-sizing: border-box;
-    }
-  </style>
+  .col-md-3 {
+    flex: 1 1 22%;
+    box-sizing: border-box;
+  }
+</style>
 
 
 <body>
@@ -142,12 +148,89 @@
     </div>
     <div class="collapse navbar-collapse justify-content-end">
       <ul class="navbar-nav">
-        <li class="nav-item"><a class="nav-link" href="login.jsp">Sign in</a></li>
-        <li class="nav-item"><a class="nav-link" href="user-save.jsp">Sign up</a></li>
+        <li class="nav-item"><a class="nav-link" href="login.jsp">SignIn</a></li>
+        <li class="nav-item"><a class="nav-link" href="placeOrder.jsp">SignUp</a></li>
       </ul>
     </div>
   </div>
 </nav>
+
+<div id="carouselExampleCaptions" class="carousel slide carousel-fade" data-mdb-ride="carousel">
+  <div class="carousel-indicators">
+    <button
+            type="button"
+            data-mdb-target="#carouselExampleCaptions"
+            data-mdb-slide-to="0"
+            class="active"
+            aria-current="true"
+            aria-label="Slide 1"
+    ></button>
+    <button
+            type="button"
+            data-mdb-target="#carouselExampleCaptions"
+            data-mdb-slide-to="1"
+            aria-label="Slide 2"
+    ></button>
+    <button
+            type="button"
+            data-mdb-target="#carouselExampleCaptions"
+            data-mdb-slide-to="2"
+            aria-label="Slide 3"
+    ></button>
+  </div>
+  <div class="carousel-inner">
+    <div class="carousel-item active">
+      <img src="<%= request.getContextPath() %>/resources/images/d18.jpg" alt="Description">
+      <div class="mask" style="background-color: rgba(0, 0, 0, 0.4)"></div>
+      <div class="carousel-caption d-none d-sm-block mb-5">
+        <h1 class="mb-4">
+          <strong style="color: #e74c3c;">Welcome to Our <span style="color: #f39c12;">Online Store</span>!</strong>
+        </h1>
+
+        <p>
+          <strong style="color: #f39c12;">Shop the best collection of <span style="color: #e74c3c;">watches</span>, <span style="color: #e74c3c;">bags</span>, and <span style="color: #e74c3c;">bottles</span>.</strong>
+        </p>
+
+        <p class="mb-4 d-none d-md-block">
+          <strong style="color: #02011b;">Find premium quality products at unbeatable prices. Browse our top-selling categories and discover your next favorite item!</strong>
+        </p>
+
+
+      </div>
+    </div>
+    <div class="carousel-item">
+      <img src="<%= request.getContextPath() %>/resources/images/d18.jpg" alt="Description">
+
+      <div class="mask" style="background-color: rgba(0, 0, 0, 0.4)"></div>
+      <div class="carousel-caption d-none d-md-block mb-5">
+        <h1 class="mb-4">
+          <strong style="color: #e74c3c;">Welcome to Our <span style="color: #f39c12;">Online Store</span>!</strong>
+        </h1>
+
+        <p>
+          <strong style="color: #f39c12;">Shop the best collection of <span style="color: #e74c3c;">watches</span>, <span style="color: #e74c3c;">bags</span>, and <span style="color: #e74c3c;">bottles</span>.</strong>
+        </p>
+
+        <p class="mb-4 d-none d-md-block">
+          <strong style="color: #02011b;">Find premium quality products at unbeatable prices. Browse our top-selling categories and discover your next favorite item!</strong>
+        </p>
+
+
+      </div>
+
+
+    </div>
+  </div>
+  <button class="carousel-control-prev" type="button" data-mdb-target="#carouselExampleCaptions" data-mdb-slide="prev">
+    <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+    <span class="visually-hidden">Previous</span>
+  </button>
+  <button class="carousel-control-next" type="button" data-mdb-target="#carouselExampleCaptions" data-mdb-slide="next">
+    <span class="carousel-control-next-icon" aria-hidden="true"></span>
+    <span class="visually-hidden">Next</span>
+  </button>
+</div>
+
 
 <div class="container">
   <div class="row">

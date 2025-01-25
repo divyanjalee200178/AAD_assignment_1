@@ -212,6 +212,11 @@
                     <span>Do you want to view a Product?</span>
                     <a href="product-view" class="btn btn-warning btn-sm">View</a>
                 </div>
+
+                <div class="action-item">
+                    <span>Do you want to Search a Product?</span>
+                    <a href="product-search.jsp" class="btn btn-warning btn-sm">View</a>
+                </div>
             </div>
         </div>
 

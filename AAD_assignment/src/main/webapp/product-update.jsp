@@ -114,7 +114,7 @@
             <h3 class="display-4">Update form</h3>
         </header>
     </div>
-    <form class="row g-3 p-3" action="product-update" method="post">
+    <form class="row g-3 p-3" action="product-update" method="post" enctype="multipart/form-data">
         <div class="col-md-6">
             <label for="code" class="form-label">Code</label>
             <input type="text" class="form-control" id="code" name="item_code">
@@ -135,7 +135,7 @@
 
         <div class="col-md-12">
             <label for="image" class="form-label">Upload an Image:</label>
-            <input type="file" id="image" name="item_image" required>
+            <input type="file" id="image" name="image" required>
         </div>
 
 
