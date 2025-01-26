@@ -55,7 +55,7 @@ public class CategoryUpdateServlet extends HttpServlet {
         }catch (Exception e){
             e.printStackTrace();
             resp.sendRedirect(
-                    "category-update.jsp?=Category updated successfully"
+                    "category-update.jsp?error=Category updated unsuccessfully"
             );
         }
     }

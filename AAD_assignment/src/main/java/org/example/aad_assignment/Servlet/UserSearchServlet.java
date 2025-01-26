@@ -6,64 +6,66 @@ import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
-import org.example.aad_assignment.DTO.ProductDTO;
+import org.example.aad_assignment.DTO.CustomerDTO;
 
 import java.io.IOException;
-import java.io.PrintWriter;
 import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
 
-
-@WebServlet(name = "ProductSearchServlet", value = "/product-search")
-public class productSearchServlet extends HttpServlet {
+@WebServlet(name = "UserSearchServlet", value = "/user-search")
+public class UserSearchServlet extends HttpServlet {
     String DB_URL="jdbc:mysql://localhost/ecommerce";
     String DB_USER="root";
     String DB_PASSWORD="Ijse@123";
 
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-        List<ProductDTO> products = new ArrayList<>();
+        List<CustomerDTO> customerDTOS = new ArrayList<>();
 
-        String searchTerm = req.getParameter("searchTerm");
+        String searchUser = req.getParameter("searchCus");
 
         try {
             Class.forName("com.mysql.cj.jdbc.Driver");
             Connection connection = DriverManager.getConnection(DB_URL, DB_USER, DB_PASSWORD);
 
+
             String sql;
-            if (searchTerm != null && !searchTerm.isEmpty()) {
-                sql = "SELECT * FROM product WHERE name LIKE ?";
+            if (searchUser != null && !searchUser.isEmpty()) {
+                sql = "SELECT * FROM users WHERE name LIKE ?";
             } else {
-                sql = "SELECT * FROM product";
+                sql = "SELECT * FROM users";
             }
 
             PreparedStatement statement = connection.prepareStatement(sql);
-            if (searchTerm != null && !searchTerm.isEmpty()) {
-                statement.setString(1, "%" + searchTerm + "%");
+            if (searchUser != null && !searchUser.isEmpty()) {
+                statement.setString(1, "%" + searchUser + "%");
             }
             ResultSet resultSet = statement.executeQuery();
 
             while (resultSet.next()) {
-                ProductDTO product = new ProductDTO(
-                        resultSet.getInt("code"),
+                CustomerDTO customerDTO = new CustomerDTO(
+                        resultSet.getInt("id"),
                         resultSet.getString("name"),
-                        resultSet.getInt("qty"),
-                        resultSet.getDouble("unitPrice"),
-                        resultSet.getString("image_path"),
-                        resultSet.getInt("c_code")
+                        resultSet.getString("email"),
+                        resultSet.getInt("number"),
+                        resultSet.getString("password"),
+                        resultSet.getString("role")
                 );
 
-                products.add(product);
+                customerDTOS.add(customerDTO);
             }
 
-            req.setAttribute("products", products);
+            req.setAttribute("customers", customerDTOS);
 
-            RequestDispatcher dispatcher = req.getRequestDispatcher("product-search.jsp");
+            RequestDispatcher dispatcher = req.getRequestDispatcher("user-search.jsp");
             dispatcher.forward(req, resp);
 
         } catch (SQLException | ClassNotFoundException e) {
             throw new ServletException("Database connection or query failed", e);
         }
     }
+
 }
+
+

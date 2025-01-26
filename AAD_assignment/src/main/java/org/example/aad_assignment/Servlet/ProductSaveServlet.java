@@ -19,27 +19,26 @@ import java.sql.DriverManager;
 import java.sql.PreparedStatement;
 import java.util.UUID;
 
-@WebServlet (name = "ProductSaveServlet", value = "/product-save")
+@WebServlet(name = "ProductSaveServlet", value = "/product-save")
 @MultipartConfig(maxFileSize = 169999999)
 public class ProductSaveServlet extends HttpServlet {
-    String DB_URL="jdbc:mysql://localhost/ecommerce";
-    String DB_USER="root";
-    String DB_PASSWORD="Ijse@123";
+    String DB_URL = "jdbc:mysql://localhost/ecommerce";
+    String DB_USER = "root";
+    String DB_PASSWORD = "Ijse@123";
     private static final String UPLOAD_DIR = "uploads/image";
 
     @Override
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-
-        String name=req.getParameter("item_name");
-        int qty= Integer.parseInt(req.getParameter("item_qty"));
-        double unitPrice= Double.parseDouble(req.getParameter("item_unitPrice"));
+        String name = req.getParameter("item_name");
+        int qty = Integer.parseInt(req.getParameter("item_qty"));
+        double unitPrice = Double.parseDouble(req.getParameter("item_unitPrice"));
+        int categoryCode = Integer.parseInt(req.getParameter("category_code"));
         Part imagePart = req.getPart("image");
 
         String imagePath = null;
         if (imagePart != null) {
             String fileName = getFileName(imagePart);
             String extension = getFileExtension(fileName);
-
 
             String uniqueFileName = UUID.randomUUID().toString() + extension;
             Path uploadPath = Path.of(getServletContext().getRealPath("") + File.separator + UPLOAD_DIR, uniqueFileName);
@@ -55,22 +54,15 @@ public class ProductSaveServlet extends HttpServlet {
             imagePath = UPLOAD_DIR + "/" + uniqueFileName;
         }
 
-
         try {
             Class.forName("com.mysql.cj.jdbc.Driver");
-            Connection connection= DriverManager.getConnection(
-                    DB_URL,
-                    DB_USER,
-                    DB_PASSWORD
-            );
+            Connection connection = DriverManager.getConnection(DB_URL, DB_USER, DB_PASSWORD);
 
-            String sql=" INSERT INTO product (name, qty, unitPrice, image_path) VALUES (?, ?, ?, ?)";
-            PreparedStatement pstm=connection.prepareStatement(sql);
-            pstm.setString(1,name);
-            pstm.setInt(2,qty);
-            pstm.setDouble(3,unitPrice);
-
-
+            String sql = "INSERT INTO product (name, qty, unitPrice, image_path, c_code) VALUES (?, ?, ?, ?, ?)";
+            PreparedStatement pstm = connection.prepareStatement(sql);
+            pstm.setString(1, name);
+            pstm.setInt(2, qty);
+            pstm.setDouble(3, unitPrice);
 
             if (imagePath != null) {
                 pstm.setString(4, imagePath);
@@ -78,21 +70,17 @@ public class ProductSaveServlet extends HttpServlet {
                 pstm.setNull(4, java.sql.Types.VARCHAR);
             }
 
-            int effectRowCount=pstm.executeUpdate();
-            if (effectRowCount>0){
-                resp.sendRedirect(
-                        "product-save.jsp?message=Product saved successfully"
-                );
-            }else {
-                resp.sendRedirect(
-                        "product-save.jsp?message=Product saved unsuccessfully"
-                );
+            pstm.setInt(5, categoryCode);
+
+            int effectRowCount = pstm.executeUpdate();
+            if (effectRowCount > 0) {
+                resp.sendRedirect("product-save.jsp?message=Product saved successfully");
+            } else {
+                resp.sendRedirect("product-save.jsp?error=Product save unsuccessful");
             }
-        }catch (Exception e){
+        } catch (Exception e) {
             e.printStackTrace();
-            resp.sendRedirect(
-                    "product-save.jsp?=Product saved successfully"
-            );
+            resp.sendRedirect("product-save.jsp?error=Product save unsuccessful");
         }
     }
 

@@ -10,6 +10,7 @@
 <head>
     <title>Update customer</title>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link href="https://cdn.jsdelivr.net/npm/@sweetalert2/theme-dark@4/dark.css" rel="stylesheet">
 </head>
 
 <style>
@@ -52,6 +53,17 @@
         height: fit-content;
 
     }
+
+    .swal2-popup {
+        background-color: white !important;
+        color: black;
+        transform: scale(0.6);
+    }
+
+    .swal2-confirm {
+        background-color: #007bff !important;
+        color: white !important;
+    }
 </style>
 
 <body>
@@ -60,30 +72,35 @@
     String message=request.getParameter("message");
     String error=request.getParameter("error");
 %>
-
-<% if (message != null || error != null) { %>
-<div id="alert-container" style="display: flex; justify-content: center; align-items: center; height: 100vh; position: absolute; width: 100%;">
-    <% if (message != null) { %>
-    <div id="alert-success" class="alert alert-success text-center" role="alert">
-        <%= message %>
-    </div>
-    <% } %>
-
-    <% if (error != null) { %>
-    <div id="alert-danger" class="alert alert-danger text-center" role="alert">
-        <%= error %>
-    </div>
-    <% } %>
-</div>
-
+<% if (message != null) { %>
 <script>
-    setTimeout(function() {
-        var alertContainer = document.getElementById('alert-container');
-        alertContainer.style.display = 'none';
-    }, 2000);
+    document.addEventListener("DOMContentLoaded", function() {
+        Swal.fire({
+            title: "User Updated Successfully!",
+            text: '<%= message %>',
+            icon: "success",
+            draggable: true,
+            confirmButtonText: "OK",
+            theme: "light"
+        });
+    });
 </script>
 <% } %>
 
+<% if (error != null) { %>
+<script>
+    document.addEventListener("DOMContentLoaded", function() {
+        Swal.fire({
+            title: "Error",
+            text: '<%= error %>',
+            icon: "error",
+            draggable: true,
+            confirmButtonText: "OK",
+            theme: "light"
+        });
+    });
+</script>
+<% } %>
 
 
 
@@ -148,5 +165,6 @@
 
 
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11/dist/sweetalert2.min.js"></script>
 </body>
 </html>

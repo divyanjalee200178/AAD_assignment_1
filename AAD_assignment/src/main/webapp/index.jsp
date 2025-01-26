@@ -245,7 +245,7 @@
                     <div class="card-body">
                         <h5 class="card-title" style="font-size: 1.5rem; color: darkred;"><%= category.getName() %></h5>
                         <p class="card-text" style="font-size: 1rem; color: blue;"><%= category.getQty() %> items available</p>
-                        <a href="addToCart?category=<%= category.getCode() %>" class="btn btn-warning mt-3">Shop Now</a>
+                        <a href="placeOrder.jsp?category=<%= category.getCode() %>" class="btn btn-warning mt-3">Shop Now</a>
                     </div>
                 </div>
             </div>

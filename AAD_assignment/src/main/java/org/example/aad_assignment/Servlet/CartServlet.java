@@ -5,48 +5,64 @@ import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
-import jakarta.servlet.http.HttpSession;
-import org.example.aad_assignment.DTO.CartItemDTO;
+import org.example.aad_assignment.DTO.CartDTO;
+import org.example.aad_assignment.Servlet.ProductsService;
 
 import java.io.IOException;
-import java.util.ArrayList;
-import java.util.List;
+import java.sql.SQLException;
 
-@WebServlet(name = "CartServlet", value = "/CartServlet")
+@WebServlet(name = "CartServlet", value = "/carts")
 public class CartServlet extends HttpServlet {
-    String DB_URL="jdbc:mysql://localhost/ecommerce";
-    String DB_USER="root";
-    String DB_PASSWORD="Ijse@123";
 
+    private static final String DB_URL = "jdbc:mysql://localhost/ecommerce";
+    private static final String DB_USER = "root";
+    private static final String DB_PASSWORD = "Ijse@123";
 
+    @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-        // Retrieve form data
-        String productName = request.getParameter("product_name");
-        int quantity = Integer.parseInt(request.getParameter("item_quantity"));
-        double unitPrice = Double.parseDouble(request.getParameter("item_unitPrice"));
-        String customerId = request.getParameter("customer_id");
+        String customerName = request.getParameter("customerName");
+        String productCode = request.getParameter("code");
+        String productName = request.getParameter("itemName");
+        String qtyStr = request.getParameter("qty");
+        String priceStr = request.getParameter("price");
 
-
-        double totalPrice = quantity * unitPrice;
-
-
-        CartItemDTO item = new CartItemDTO();
-        item.setProductName(productName);
-        item.setQuantity(quantity);
-        item.setUnitPrice(unitPrice);
-        item.setTotalPrice(totalPrice);
-        item.setCustomerId(customerId);
-
-
-        HttpSession session = request.getSession();
-        List<CartItemDTO> cart = (List<CartItemDTO>) session.getAttribute("cart");
-        if (cart == null) {
-            cart = new ArrayList<>();
-            session.setAttribute("cart", cart);
+        if (isNullOrEmpty(customerName, productCode, productName, qtyStr, priceStr)) {
+            redirectToPageWithMessage(request, response, "Please fill out all fields.", "error");
+            return;
         }
 
-        cart.add(item);
+        try {
+            int qty = Integer.parseInt(qtyStr);
+            double price = Double.parseDouble(priceStr);
+            double totalPrice = qty * price;
 
-        response.sendRedirect("placeOrder.jsp");
+            ProductsService productService = new ProductsService();
+
+            try {
+                productService.addToCart(customerName, productCode, productName, price, qty, totalPrice);
+                redirectToPageWithMessage(request, response, "Item added to cart successfully!", "success");
+            } catch (SQLException e) {
+                e.printStackTrace();
+                redirectToPageWithMessage(request, response, "Failed to add item to cart. " + e.getMessage(), "error");
+            }
+        } catch (NumberFormatException e) {
+            e.printStackTrace();
+            redirectToPageWithMessage(request, response, "An error occurred. Please try again.", "error");
+        }
+    }
+
+    private boolean isNullOrEmpty(String... values) {
+        for (String value : values) {
+            if (value == null || value.trim().isEmpty()) {
+                return true;
+            }
+        }
+        return false;
+    }
+
+    private void redirectToPageWithMessage(HttpServletRequest request, HttpServletResponse response, String message, String type) throws ServletException, IOException {
+        request.setAttribute("message", message);
+        request.setAttribute("type", type);
+        request.getRequestDispatcher("placeOrder.jsp").forward(request, response);
     }
 }

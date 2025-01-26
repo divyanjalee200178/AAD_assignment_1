@@ -11,12 +11,10 @@ public class CategoryService {
         this.categorySet = new CategorySetServlet();
     }
 
-    // Get all categories
     public List<CategoryDTO> getCategories() {
         return categorySet.getAllCategories();
     }
 
-    // Get a single category by code
     public CategoryDTO getCategoryByCode(int code) {
         return categorySet.getCategoryByCode(code);
     }

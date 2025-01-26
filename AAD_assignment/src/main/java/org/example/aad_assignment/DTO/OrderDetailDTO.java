@@ -9,13 +9,11 @@ import lombok.Setter;
 @NoArgsConstructor
 @Getter
 @Setter
-public class CartItemDTO {
-    private String customerId;
-    private String customerName;
+public class OrderDetailDTO {
+    private int id;
+    private int orderId;
     private String productName;
     private int quantity;
-    private double unitPrice;
-    private double totalPrice;
-
-
+    private Double unitPrice;
+    private Double totalPrice;
 }

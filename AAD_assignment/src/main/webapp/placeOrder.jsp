@@ -4,12 +4,9 @@
 <%@ page import="java.sql.Statement" %>
 <%@ page import="java.sql.ResultSet" %>
 <%@ page import="java.util.HashMap" %>
-<%@ page import="org.example.aad_assignment.DTO.CartItemDTO" %><%--
-  Created by IntelliJ IDEA.
-  Date: 1/20/2025
-  Time: 10:19 PM
-  To change this template use File | Settings | File Templates.
---%>
+<%@ page import="org.example.aad_assignment.DTO.ProductDTO" %>
+<%@ page import="org.example.aad_assignment.DTO.CartDTO" %>
+<%@ page import="org.example.aad_assignment.Servlet.ProductService" %>
 
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <html>
@@ -66,6 +63,84 @@
         box-shadow: 0 6px 12px rgba(0, 0, 0, 0.3);
     }
 
+    .card {
+        width: 100%;
+        margin: 10px 0;
+        border-radius: 12px;
+        background: rgba(255, 255, 255, 0.9);
+        box-shadow: 0 10px 20px rgba(0, 0, 0, 0.1);
+        transition: all 0.3s ease;
+        backdrop-filter: blur(8px);
+        -webkit-backdrop-filter: blur(8px);
+    }
+
+    /* Card hover effect */
+    .card:hover {
+        transform: translateY(-5px);
+        box-shadow: 0 15px 30px rgba(0, 0, 0, 0.2);
+    }
+
+    /* Card image styling */
+    .card img {
+        width: 100%;
+        height: 200px;
+        object-fit: cover;
+        border-top-left-radius: 12px;
+        border-top-right-radius: 12px;
+    }
+
+    /* Card body styling */
+    .card-body {
+        padding: 20px;
+        text-align: center;
+        background-color: #fff;
+        border-bottom-left-radius: 12px;
+        border-bottom-right-radius: 12px;
+    }
+
+
+    .card-title {
+        font-size: 1.4rem;
+        font-weight: bold;
+        color: #2c3e50;
+        margin-bottom: 10px;
+    }
+    .row {
+        display: flex;
+        flex-wrap: wrap;
+        justify-content: space-between;
+    }
+
+
+    .card-text {
+        font-size: 1.1rem;
+        color: #34495e;
+        margin-bottom: 15px;
+    }
+
+
+    .btn-warning {
+        background-color: #e67e22;
+        border: none;
+        padding: 10px 20px;
+        font-size: 1rem;
+        transition: all 0.3s ease;
+    }
+
+    /* Button hover effect */
+    .btn-warning:hover {
+        background-color: #d35400;
+        transform: translateY(-2px);
+    }
+
+    /* Responsive design for smaller screens */
+    @media (max-width: 768px) {
+        .col-md-4 {
+            flex: 1 1 100%;
+            margin-bottom: 20px;
+        }
+    }
+
     .action-item span {
         font-size: 1rem;
         font-weight: bold;
@@ -86,8 +161,6 @@
         background-color: #dc3545;
         color: #fff;
     }
-
-
 </style>
 
 <body>
@@ -95,21 +168,14 @@
     String message = request.getParameter("message");
     String error = request.getParameter("error");
 %>
-<%
-    if (message != null) {
-%>
-<div style="color: green"><%= message %></div>
-<%
-    }
-%>
 
-<%
-    if (error != null) {
-%>
+<% if (message != null) { %>
+<div style="color: green"><%= message %></div>
+<% } %>
+
+<% if (error != null) { %>
 <div style="color: red"><%= error %></div>
-<%
-    }
-%>
+<% } %>
 
 <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
     <div class="container-fluid">
@@ -129,109 +195,83 @@
     </div>
 </nav>
 
+<section class="set">
+    <div class="left-side">
+        <h4>Available Items</h4>
+        <div class="row justify-content-center">
+
+            <%
+                ProductService productService = new ProductService();
+                List<ProductDTO> products = productService.getProducts();
+                for (ProductDTO product : products) {
+            %>
+            <div class="col-md-4 mb-5">
+                <div class="card category-card" data-code="<%= product.getCode() %>">
+                    <%
+                        String imagePath = product.getImagePath();
+                        if (imagePath != null && !imagePath.isEmpty()) {
+                    %>
+                    <img src="<%= request.getContextPath() + "/" + imagePath %>" class="card-img-top img-fluid" alt="<%= product.getName() %>">
+                    <% } else { %>
+                    <img src="<%= request.getContextPath() + "/images/default.png" %>" class="card-img-top img-fluid" alt="Default Image">
+                    <% } %>
+                    <div class="card-body">
+                        <h5 class="card-title" style="font-size: 1.5rem; color: darkred;"><%= product.getName() %></h5>
+                        <h5 class="card-title" style="font-size: 1.5rem; color: darkred;"><%= product.getCode() %></h5>
+                        <p class="card-text" style="font-size: 1rem; color: blue;">
+                            <%= product.getQty() %></p>
+                        <p class="card-text" style="font-size: 1rem; color: blue;">
+                            <%= product.getUnitPrice() %>
+                        </p>
+                    </div>
+                </div>
+            </div>
+            <% } %>
+        </div>
+    </div>
+</section>
+
 <section class="container my-2 bg-dark w-50 text-light p-3">
     <div class="container-section bg-dark text-light py-2">
         <header class="text-center">
             <h1 class="display-4">Item form</h1>
         </header>
     </div>
-    <form class="row g-3 p-3" action="CartServlet" method="post">
-        <%
-            String predefinedDate = "2025-01-20";
-        %>
-        <div class="col-md-6">
-            <label for="date" class="form-label">Date</label>
-            <input type="date" class="form-control" id="date" name="date" value="<%= predefinedDate %>">
+    <form class="row g-3 p-3" action="carts" method="post">
+        <h4>Add Product to Cart</h4>
+        <div class="mb-3">
+            <label for="code" class="form-label">Code</label>
+            <input type="text" class="form-control" name="code" id="code" placeholder="Enter product code" readonly>
         </div>
-
-        <div class="col-md-6">
-            <label for="inputState" class="form-label">Customer Name</label>
-            <select id="inputState" class="form-select" name="customer_name">
-                <option selected>Choose...</option>
-                <%
-                    try {
-                        Class.forName("com.mysql.cj.jdbc.Driver");
-                        Connection connection = DriverManager.getConnection(
-                                "jdbc:mysql://localhost/ecommerce",
-                                "root",
-                                "Ijse@123"
-                        );
-                        Statement st = connection.createStatement();
-                        String query = "SELECT id, name FROM users WHERE role = 'customer'";
-
-                        ResultSet rst = st.executeQuery(query);
-                        while (rst.next()) {
-                %>
-                <option data-id="<%= rst.getString("id") %>"><%= rst.getString("name") %></option>
-                <%
-                        }
-                    } catch (Exception e) {
-                        e.printStackTrace();
-                    }
-                %>
-            </select>
+        <div class="mb-3">
+            <label for="itemName" class="form-label">Item Name</label>
+            <input type="text" class="form-control" name="itemName" id="itemName" placeholder="Item name" readonly>
         </div>
-
-        <div class="col-md-6">
-            <label for="id" class="form-label">Customer Id</label>
-            <input type="text" class="form-control" id="id" name="customer_id">
+        <div class="mb-3">
+            <label for="qty" class="form-label">Quantity</label>
+            <input type="number" class="form-control" name="qty" id="qty" placeholder="Quantity" min="1">
         </div>
-
-        <div class="col-md-6">
-            <label for="product" class="form-label">Product Name</label>
-            <select id="product" class="form-select" name="product_name">
-                <option selected>Choose...</option>
-                <%
-                    try {
-                        Class.forName("com.mysql.cj.jdbc.Driver");
-                        Connection connection = DriverManager.getConnection(
-                                "jdbc:mysql://localhost/ecommerce",
-                                "root",
-                                "Ijse@123"
-                        );
-                        Statement statement = connection.createStatement();
-                        String query = "SELECT code, name, qty, unitPrice FROM product";
-                        ResultSet resultSet = statement.executeQuery(query);
-                        while (resultSet.next()) {
-                %>
-                <option
-                        data-code="<%= resultSet.getString("code") %>"
-                        data-qty="<%= resultSet.getInt("qty") %>"
-                        data-unitPrice="<%= resultSet.getDouble("unitPrice") %>">
-                    <%= resultSet.getString("name") %>
-                </option>
-                <%
-                        }
-                    } catch (Exception e) {
-                        e.printStackTrace();
-                    }
-                %>
-            </select>
+        <div class="mb-3">
+            <label for="price" class="form-label">Price</label>
+            <input type="text" class="form-control" name="price" id="price" placeholder="Price" readonly>
         </div>
-
-        <div class="col-md-6">
-            <label for="qty" class="form-label">Qty</label>
-            <input type="number" class="form-control" id="qty" name="item_qty">
+        <div class="mb-3">
+            <label for="userName" class="form-label">Customer Name</label>
+            <input type="text" name="customerName" class="form-control" placeholder="User name" id="userName">
         </div>
-
-        <div class="col-md-6">
-            <label for="unit_price" class="form-label">Unit price</label>
-            <input type="text" class="form-control" id="unit_price" name="item_unitPrice">
-        </div>
-
-        <div class="col-md-6">
-            <label for="quantity" class="form-label">QtyOnHand</label>
-            <input type="number" class="form-control" id="quantity" name="item_quantity">
+        <div class="mb-3">
+            <label for="qt" class="form-label">Qty</label>
+            <input type="number" name="qt" class="form-control" placeholder="qty" id="qt">
         </div>
 
 
-
-        <div class="col-12 text-center mt-4">
-            <div>
-                <button type="submit" class="btn btn-primary btn-lg w-50 mb-3">Add to cart</button>
-            </div>
-        </div>
+        <button type="submit" class="btn btn-success btn-lg">Save to Cart</button>
     </form>
+
+    <form >
+        <button type="submit" class="btn btn-danger btn-sm">Add to Cart</button>
+    </form>
+
 </section>
 
 <section class="container my-3 bg-light p-3">
@@ -241,7 +281,8 @@
     <table class="table table-bordered table-striped mt-3" id="cartTable">
         <thead class="table-dark">
         <tr>
-            <th>CustomerId</th>
+            <th>Customer Name</th>
+            <th>Product Code</th>
             <th>Product Name</th>
             <th>Quantity</th>
             <th>Unit Price</th>
@@ -250,61 +291,146 @@
         </thead>
         <tbody>
         <%
-            List<CartItemDTO> cart = (List<CartItemDTO>) session.getAttribute("cart");
+            List<CartDTO> cart = (List<CartDTO>) session.getAttribute("cart");
             if (cart != null) {
-                for (CartItemDTO item : cart) {
+                for (CartDTO item : cart) {
         %>
         <tr>
-            <td><%= item.getCustomerId() %></td>
+            <td><%= item.getCustomerName() %></td>
+            <td><%= item.getProductCode() %></td>
             <td><%= item.getProductName() %></td>
-            <td><%= item.getQuantity() %></td>
-            <td><%= item.getUnitPrice() %></td>
+            <td><%= item.getQty() %></td>
+            <td><%= item.getPrice() %></td>
             <td><%= item.getTotalPrice() %></td>
         </tr>
         <%
             }
         } else {
         %>
-        <tr><td colspan="4" class="text-center">No items in cart</td></tr>
+        <tr><td colspan="4" class="text-center"></td></tr>
         <% } %>
         </tbody>
     </table>
 
     <div class="text-center">
-        <form action="PlaceOrderServlet" method="post">
+        <form action="place" method="post">
             <button type="submit" class="btn btn-success btn-lg">Place Order</button>
         </form>
     </div>
 </section>
 
 
-<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+<script>
+    function addClickListenerToProductCards() {
+        const cards = document.querySelectorAll('.category-card');
+
+        cards.forEach(card => {
+            card.addEventListener('click', function () {
+                const productCode = card.getAttribute('data-code');
+                const productName = card.querySelector('.card-title').textContent.trim();
+                const productPrice = card.querySelectorAll('.card-text')[1].textContent.trim(); // Get the price from the second .card-text
+                const productQty = card.querySelectorAll('.card-text')[0].textContent.trim(); // Get the quantity from the first .card-text
+
+                document.getElementById('code').value = productCode;
+                document.getElementById('itemName').value = productName;
+                document.getElementById('price').value = productPrice;
+                document.getElementById('qty').value = productQty;
+
+                document.getElementById('userName').value = '';
+            });
+        });
+    }
+
+    window.onload = function () {
+        addClickListenerToProductCards();
+    };
+
+
+</script>
+
 
 <script>
-    document.getElementById("inputState").addEventListener("change", function() {
-        var customerNameSelect = this;
-        var customerIdInput = document.getElementById("id");
+    function handleProductSelection() {
+        const cards = document.querySelectorAll('.category-card');
 
-        var selectedOption = customerNameSelect.options[customerNameSelect.selectedIndex];
+        cards.forEach(card => {
+            card.addEventListener('click', function () {
+                const productCode = card.getAttribute('data-code');
+                const productName = card.querySelector('.card-title').textContent.trim();
+                const productQty = card.querySelectorAll('.card-text')[0].textContent.trim();
+                const productPrice = card.querySelectorAll('.card-text')[1].textContent.trim();
 
-        var customerId = selectedOption.getAttribute("data-id");
+                document.getElementById('code').value = productCode;
+                document.getElementById('itemName').value = productName;
+                document.getElementById('qty').value = productQty;
+                document.getElementById('price').value = productPrice;
+                document.getElementById('userName').value = '';
+            });
+        });
+    }
 
-        customerIdInput.value = customerId;
-    });
 
+    function addToCart(event) {
+        event.preventDefault();
 
-    document.getElementById("product").addEventListener("change", function () {
-        var productSelect = this;
-        var selectedOption = productSelect.options[productSelect.selectedIndex];
-        var productQty = selectedOption.getAttribute("data-qty");
-        var productUnitPrice = selectedOption.getAttribute("data-unitPrice");
-        document.getElementById("qty").value = productQty || "";
-        document.getElementById("unit_price").value = productUnitPrice || "";
-    });
+        const productCode = document.getElementById('code').value;
+        const productName = document.getElementById('itemName').value;
+        const qty = parseInt(document.getElementById('qt').value) || 0;
+        const unitPrice = parseFloat(document.getElementById('price').value) || 0;
+        const customerName = document.getElementById('userName').value.trim();
+
+        if (!productCode || !productName || qty <= 0 || unitPrice <= 0 || !customerName) {
+            alert('Please complete all fields with valid data.');
+            return;
+        }
+
+        const totalPrice = qty * unitPrice;
+
+        const cartTable = document.getElementById('cartTable').getElementsByTagName('tbody')[0];
+        let rowExists = false;
+
+        for (let i = 0; i < cartTable.rows.length; i++) {
+            const row = cartTable.rows[i];
+            const existingCode = row.cells[1].textContent;
+
+            if (existingCode === productCode) {
+                const existingQty = parseInt(row.cells[3].textContent);
+                const updatedQty = existingQty + qty;
+                const updatedTotalPrice = updatedQty * unitPrice;
+
+                row.cells[3].textContent = updatedQty;
+                row.cells[5].textContent = updatedTotalPrice.toFixed(2);
+
+                rowExists = true;
+                break;
+            }
+        }
+
+        if (!rowExists) {
+            // Add a new row to the cart
+            const newRow = cartTable.insertRow();
+
+            newRow.insertCell(0).textContent = customerName;
+            newRow.insertCell(1).textContent = productCode;
+            newRow.insertCell(2).textContent = productName;
+            newRow.insertCell(3).textContent = qty;
+            newRow.insertCell(4).textContent = unitPrice.toFixed(2);
+            newRow.insertCell(5).textContent = totalPrice.toFixed(2);
+        }
+
+        // Clear input fields
+        document.getElementById('code').value = '';
+        document.getElementById('itemName').value = '';
+        document.getElementById('qt').value = '';
+        document.getElementById('price').value = '';
+        document.getElementById('userName').value = '';
+    }
 </script>
 
 
 
+
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
 
 </body>
 </html>

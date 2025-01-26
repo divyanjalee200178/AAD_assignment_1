@@ -41,13 +41,13 @@ public class CategoryDeleteServlet extends HttpServlet {
                 );
             }else {
                 resp.sendRedirect(
-                        "category-delete.jsp?message=Category  deleted"
+                        "category-delete.jsp?error=Customer not found"
                 );
             }
         } catch (Exception e) {
             e.printStackTrace();
             resp.sendRedirect(
-                    "category-delete.jsp?message=Category deleted successfully"
+                    "category-delete.jsp?error=Customer delete unsuccessfully"
             );
         }
     }

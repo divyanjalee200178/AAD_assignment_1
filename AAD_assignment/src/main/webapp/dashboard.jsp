@@ -207,8 +207,8 @@
     <a href="user-update.jsp">Profile</a>
     <a href="user-save.jsp">User Manage</a>
     <a href="">Log out</a>
-    <a href="order-view">Order Details</a>
-    <a href="cart-view">Cart Details</a>
+    <a href="orderDetail-view">Order Details</a>
+    <a href="order-view">List orders</a>
 </div>
 
 

@@ -1,9 +1,16 @@
+<%@ page import="org.example.aad_assignment.DTO.CartDTO" %>
 <%@ page import="java.util.List" %>
-<%@ page import="org.example.aad_assignment.DTO.CustomerDTO" %>
+<%@ page import="org.example.aad_assignment.Servlet.Carts" %><%--
+  Created by IntelliJ IDEA.
+  User: Dilan Madusanka
+  Date: 1/26/2025
+  Time: 12:37 AM
+  To change this template use File | Settings | File Templates.
+--%>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <html>
 <head>
-    <title>Customer List</title>
+    <title>View cart</title>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
 </head>
 
@@ -138,9 +145,12 @@
 </nav>
 
 
-<h1>View Customers</h1>
+<h1>View Cart</h1>
 
 <%
+    Carts cartsService = new Carts();
+    List<CartDTO> cartList = cartsService.getCategories();
+
     String errorMessage = (String) request.getAttribute("error");
     if (errorMessage != null) {
 %>
@@ -152,48 +162,51 @@
 %>
 
 <div class="table-wrapper">
-<%
-    List<CustomerDTO> dataList = (List<CustomerDTO>) request.getAttribute("users");
-    if (dataList != null && !dataList.isEmpty()) {
-%>
-    <div class="table-container">
-<table>
-    <thead>
-    <tr>
-        <th>ID</th>
-        <th>Name</th>
-        <th>Email</th>
-        <th>Number</th>
-        <th>Role</th>
-    </tr>
-    </thead>
-    <tbody>
     <%
-        for (CustomerDTO customer : dataList) {
+        if (cartList != null && !cartList.isEmpty()) {
     %>
-    <tr>
-        <td><%= customer.getId() %></td>
-        <td><%= customer.getName() %></td>
-        <td><%= customer.getEmail() %></td>
-        <td><%= customer.getNumber() %></td>
-        <td><%= customer.getRole() %></td>
-    </tr>
+    <div class="table-container">
+        <table>
+            <thead>
+            <tr>
+                <th>ID</th>
+                <th>Product code</th>
+                <th>Product Name</th>
+                <th>Price</th>
+                <th>Qty</th>
+                <th>Customer Name</th>
+                <th>Total Price</th>
+            </tr>
+            </thead>
+            <tbody>
+            <%
+                for (CartDTO cart : cartList) {
+            %>
+            <tr>
+                <td><%= cart.getId() %></td>
+                <td><%= cart.getProductCode() %></td>
+                <td><%= cart.getProductName() %></td>
+                <td><%= cart.getPrice() %></td>
+                <td><%= cart.getQty() %></td>
+                <td><%= cart.getCustomerName() %></td>
+                <td><%= cart.getTotalPrice() %></td>
+            </tr>
+            <%
+                }
+            %>
+            </tbody>
+        </table>
+    </div>
+    <%
+    } else {
+    %>
+    <p>No carts found.</p>
     <%
         }
     %>
-    </tbody>
-</table>
-    </div>
-<%
-} else {
-%>
-<p>No customers found.</p>
-<%
-    }
-%>
 
 </div>
-
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
 </body>
 </html>
+

@@ -16,9 +16,9 @@ public class PlaceOrderServlet extends HttpServlet {
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 
 
-        String dateParam = request.getParameter("date");
+        String setDate = request.getParameter("date");
 
-        LocalDate date = LocalDate.parse(dateParam);
+        LocalDate date = LocalDate.parse(setDate);
 
 
         PlaceOrderDTO placeOrderDTO = new PlaceOrderDTO();
