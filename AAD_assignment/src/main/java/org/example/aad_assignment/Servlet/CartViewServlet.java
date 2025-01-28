@@ -6,8 +6,8 @@ import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
+import org.example.aad_assignment.DTO.CartDTO;
 import org.example.aad_assignment.DTO.CustomerDTO;
-import org.example.aad_assignment.DTO.ProductDTO;
 
 import java.io.IOException;
 import java.sql.Connection;
@@ -17,15 +17,15 @@ import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.List;
 
-@WebServlet(name = "ProductViewServlet", value = "/product-view")
-public class ProductViewServlet extends HttpServlet {
+@WebServlet(name = "CartViewServlet", value = "/cart-view")
+public class CartViewServlet extends HttpServlet {
     String DB_URL="jdbc:mysql://localhost/ecommerce";
     String DB_USER="root";
     String DB_PASSWORD="Ijse@123";
 
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-        List<ProductDTO> productList=new ArrayList<>();
+        List<CartDTO> cartList=new ArrayList<>();
         try {
             Class.forName("com.mysql.cj.jdbc.Driver");
             Connection connection= DriverManager.getConnection(
@@ -33,32 +33,33 @@ public class ProductViewServlet extends HttpServlet {
                     DB_USER,
                     DB_PASSWORD
             );
-            String sql="SELECT * FROM product";
+            String sql="SELECT * FROM cart";
             Statement stm=connection.createStatement();
             ResultSet rst=stm.executeQuery(sql);
             while (rst.next()){
-                ProductDTO productDTO =new ProductDTO(
+                CartDTO cartDTO=new CartDTO(
                         rst.getInt(1),
-                        rst.getString(2),
-                        rst.getInt(3),
+                        rst.getInt(2),
+                        rst.getString(3),
                         rst.getDouble(4),
-                        rst.getString(5),
-                        rst.getInt(6)
+                        rst.getInt(5),
+                        rst.getDouble(6),
+                        rst.getString(7)
+
                 );
-                productList.add(productDTO);
+                cartList.add(cartDTO);
             }
 
-            req.setAttribute("products", productList);
-            RequestDispatcher rd = req.getRequestDispatcher("product-view.jsp");
+            req.setAttribute("cart", cartList);
+            RequestDispatcher rd = req.getRequestDispatcher("cart-view.jsp");
             rd.forward(req, resp);
 
         } catch (Exception e) {
             e.printStackTrace();
             req.setAttribute("error", "Error loading customers: " + e.getMessage());
-            RequestDispatcher rd = req.getRequestDispatcher("product-view.jsp");
+            RequestDispatcher rd = req.getRequestDispatcher("cart-view.jsp");
             rd.forward(req, resp);
         }
     }
+
 }
-
-

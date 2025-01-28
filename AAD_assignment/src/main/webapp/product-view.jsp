@@ -163,6 +163,7 @@
             <th>Qty</th>
             <th>Unit Price</th>
             <th>Image</th>
+            <th>Category code</th>
         </tr>
         </thead>
         <tbody>
@@ -188,6 +189,7 @@
                     }
                 %>
             </td>
+            <td><%= product.getC_code() %></td>
         </tr>
         <%
             }

@@ -3,6 +3,7 @@
 <head>
     <title>Category Save</title>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link href="https://cdn.jsdelivr.net/npm/@sweetalert2/theme-dark@4/dark.css" rel="stylesheet">
 </head>
 
 <style>
@@ -39,7 +40,7 @@
         margin-top: 20px;
     }
 
-    .action-item {
+    .action-category{
         background-color: #343a40;
         padding: 10px 15px;
         border-radius: 8px;
@@ -49,7 +50,7 @@
         margin: 0 5px;
     }
 
-    .action-item:hover {
+    .action-category:hover {
         transform: translateY(-5px);
         box-shadow: 0 6px 12px rgba(0, 0, 0, 0.3);
     }
@@ -96,6 +97,16 @@
     .btn-warning:hover {
         background-color: #e0a800;
     }
+    .swal2-popup {
+        background-color: white !important;
+        color: black;
+        transform: scale(0.6);
+    }
+
+    .swal2-confirm {
+        background-color: #007bff !important;
+        color: white !important;
+    }
 
 </style>
 
@@ -105,21 +116,35 @@
     String message=request.getParameter("message");
     String error=request.getParameter("error");
 %>
-<%
-    if (message!=null){
-%>
-<div style="color: green"><%=message%></div>
-<%
-    }
-%>
+<% if (message != null) { %>
+<script>
+    document.addEventListener("DOMContentLoaded", function() {
+        Swal.fire({
+            title: "Category saved Successfully!",
+            text: '<%= message %>',
+            icon: "success",
+            draggable: true,
+            confirmButtonText: "OK",
+            theme: "light"
+        });
+    });
+</script>
+<% } %>
 
-<%
-    if (error!=null){
-%>
-<div style="color: red"><%=error%></div>
-<%
-    }
-%>
+<% if (error != null) { %>
+<script>
+    document.addEventListener("DOMContentLoaded", function() {
+        Swal.fire({
+            title: "Error",
+            text: '<%= error %>',
+            icon: "error",
+            draggable: true,
+            confirmButtonText: "OK",
+            theme: "light"
+        });
+    });
+</script>
+<% } %>
 
 <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
     <div class="container-fluid">
@@ -182,6 +207,11 @@
                     <span>Do you want to view a Category?</span>
                     <a href="category-view" class="btn btn-warning btn-sm">View</a>
                 </div>
+
+                <div class="action-category">
+                    <span>Do you want to search a Category?</span>
+                    <a href="category-search.jsp" class="btn btn-info btn-sm">Search</a>
+                </div>
             </div>
         </div>
 
@@ -189,5 +219,6 @@
 </section>
 
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11/dist/sweetalert2.min.js"></script>
 </body>
 </html>

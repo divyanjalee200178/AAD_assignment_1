@@ -1,9 +1,15 @@
-<%@ page import="java.util.List" %>
-<%@ page import="org.example.aad_assignment.DTO.CustomerDTO" %>
+<%@ page import="org.example.aad_assignment.DTO.OrderDetailDTO" %>
+<%@ page import="java.util.List" %><%--
+  Created by IntelliJ IDEA.
+  User: Dilan Madusanka
+  Date: 1/25/2025
+  Time: 1:23 PM
+  To change this template use File | Settings | File Templates.
+--%>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <html>
 <head>
-    <title>Customer List</title>
+    <title>View order details</title>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
 </head>
 
@@ -138,7 +144,7 @@
 </nav>
 
 
-<h1>View Customers</h1>
+<h1>View Orders</h1>
 
 <%
     String errorMessage = (String) request.getAttribute("error");
@@ -152,47 +158,50 @@
 %>
 
 <div class="table-wrapper">
-<%
-    List<CustomerDTO> dataList = (List<CustomerDTO>) request.getAttribute("users");
-    if (dataList != null && !dataList.isEmpty()) {
-%>
-    <div class="table-container">
-<table>
-    <thead>
-    <tr>
-        <th>ID</th>
-        <th>Name</th>
-        <th>Email</th>
-        <th>Number</th>
-        <th>Role</th>
-    </tr>
-    </thead>
-    <tbody>
     <%
-        for (CustomerDTO customer : dataList) {
+        List<OrderDetailDTO> dataList = (List<OrderDetailDTO>) request.getAttribute("orderDetails");
+        if (dataList != null && !dataList.isEmpty()) {
     %>
-    <tr>
-        <td><%= customer.getId() %></td>
-        <td><%= customer.getName() %></td>
-        <td><%= customer.getEmail() %></td>
-        <td><%= customer.getNumber() %></td>
-        <td><%= customer.getRole() %></td>
-    </tr>
+    <div class="table-container">
+        <table>
+            <thead>
+            <tr>
+                <th>ID</th>
+                <th>OrderId</th>
+                <th>Product name</th>
+                <th>Qty</th>
+                <th>Unit price</th>
+                <th>Total price</th>
+            </tr>
+            </thead>
+            <tbody>
+            <%
+                for (OrderDetailDTO orderDetail : dataList) {
+            %>
+            <tr>
+                <td><%= orderDetail.getId() %></td>
+                <td><%= orderDetail.getOrderId() %></td>
+                <td><%= orderDetail.getProductName() %></td>
+                <td><%= orderDetail.getQuantity() %></td>
+                <td><%= orderDetail.getUnitPrice() %></td>
+                <td><%= orderDetail.getTotalPrice() %></td>
+            </tr>
+            <%
+                }
+            %>
+            </tbody>
+        </table>
+    </div>
+    <%
+    } else {
+    %>
+    <p>No order details found.</p>
     <%
         }
     %>
-    </tbody>
-</table>
-    </div>
-<%
-} else {
-%>
-<p>No customers found.</p>
-<%
-    }
-%>
 
 </div>
+
 
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
 </body>

@@ -18,8 +18,6 @@
         padding: 0;
     }
 
-
-
     .set {
         display: flex;
         justify-content: space-between;
@@ -31,9 +29,6 @@
         padding: 20px;
         box-shadow: 0 4px 30px rgba(0, 0, 0, 0.1);
         border: 1px solid rgba(255, 255, 255, 0.18);
-        /*display: flex;*/
-        /*justify-content: space-between;*/
-        /*margin-top: 20px;*/
     }
 
     .left-side {
@@ -41,91 +36,12 @@
         padding: 20px;
         margin: 10px;
         color: black;
-        /*border-radius: 8px;*/
-        /*box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);*/
         backdrop-filter: blur(10px);
         -webkit-backdrop-filter: blur(10px);
         background: rgba(255, 255, 255, 0.2);
         border-radius: 10px;
         box-shadow: 0 4px 30px rgba(0, 0, 0, 0.1);
         border: 1px solid rgba(255, 255, 255, 0.18);
-    }
-
-    .display-4{
-        color: black;
-        font-size: 1.4rem;
-    }
-
-    .card {
-        box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px;
-    }
-    .footer-cta {
-        box-shadow: rgba(0, 0, 0, 0.15) 0px 5px 15px;
-    }
-    .container {
-        margin-top: 50px;
-        padding: 5px;
-        background: rgba(255, 255, 255, 0.3);
-        border-radius: 10px;
-        box-shadow: 0 4px 30px rgba(0, 0, 0, 0.1);
-        backdrop-filter: blur(10px);
-        -webkit-backdrop-filter: blur(10px);
-        border: 1px solid rgba(255, 255, 255, 0.18);
-        max-width: 1200px;
-        margin-left: auto;
-        margin-right: auto;
-    }
-
-    .card {
-        width: 100%;
-        margin: 10px 0;
-        transition: all 0.3s ease;
-        /*border: 4px solid white;*/
-        border-radius: 10px;
-        /*box-shadow: 2px 2px 8px rgba(0, 0, 0, 0.6);*/
-        background: rgba(255, 255, 255, 0.3);
-        box-shadow: 0 4px 30px rgba(0, 0, 0, 0.1);
-        backdrop-filter: blur(10px);
-        -webkit-backdrop-filter: blur(10px);
-        border: 1px solid rgba(255, 255, 255, 0.18);
-    }
-
-    .row {
-        display: flex;
-        flex-wrap: wrap;
-        justify-content: space-between;
-    }
-
-    .card:hover {
-        transform: scale(1.05);
-        box-shadow: 0px 6px 10px rgba(0, 0, 0, 0.2);
-    }
-
-    .card img {
-        width: 100%;
-        height: 150px;
-        object-fit: cover;
-        border-top-left-radius: 8px;
-        border-top-right-radius: 8px;
-    }
-
-    .card-body {
-        background-color: #fff;
-        padding: 20px;
-        text-align: center;
-        border-bottom-left-radius: 8px;
-        border-bottom-right-radius: 8px;
-    }
-
-    .card-title {
-        font-size: 1.25rem;
-        font-weight: bold;
-        color: #343a40;
-    }
-
-    .card-text {
-        font-size: 0.9rem;
-        color: #6c757d;
     }
 
     .right-side {
@@ -164,7 +80,7 @@
 </style>
 
 <body>
-<section class="container my-2  w-75 text-light p-3">
+<section class="container my-2 w-75 text-light p-3">
     <div class="container-section ">
         <header class="text-center">
             <h3 class="display-4">Add to Cart</h3>
@@ -176,40 +92,57 @@
             <h4>Available Items</h4>
 
             <%
-                // Fetching the list of products to display
                 List<ProductDTO> dataList = (List<ProductDTO>) request.getAttribute("product");
                 if (dataList != null && !dataList.isEmpty()) {
             %>
-            <div class="row">
+            <table>
+                <thead>
+                <tr>
+                    <th>Code</th>
+                    <th>Name</th>
+                    <th>Qty</th>
+                    <th>UnitPrice</th>
+                    <th>Image</th>
+                </tr>
+                </thead>
+                <tbody id="itemTableBody">
                 <%
                     for (ProductDTO product : dataList) {
                 %>
-                <div class="col-md-4 mb-5">
-                    <div class="card product-card" onclick="fillForm('<%= product.getCode() %>', '<%= product.getName() %>', <%= product.getQty() %>, <%= product.getUnitPrice() %>)">
-                        <img src="<%= request.getContextPath() + "/" + product.getImagePath() %>" class="card-img-top" alt="<%= product.getName() %>" style="height: 200px; object-fit: cover;">
-                        <div class="card-body">
-                            <h5 class="card-title" style="font-size: 1.5rem; color: darkred;"><%= product.getName() %></h5>
-                            <p class="card-text" style="font-size: 1rem; color: blue;">
-                                Code: <%= product.getCode() %><br>
-                                Qty Available: <%= product.getQty() %><br>
-                                Price: $<%= product.getUnitPrice() %>
-                            </p>
-                            <a href="addToCart?code=<%= product.getCode() %>" class="btn btn-warning mt-3">Add to Cart</a>
-                        </div>
-                    </div>
-                </div>
+                <tr>
+                    <td><%= product.getCode() %></td>
+                    <td><%= product.getName() %></td>
+                    <td><%= product.getQty()%></td>
+                    <td><%= product.getUnitPrice() %></td>
+                    <td>
+                        <%
+                            String imagePath = product.getImagePath();
+                            if (imagePath != null && !imagePath.isEmpty()) {
+                        %>
+                        <img src="<%= request.getContextPath() + "/" + imagePath %>" alt="Product Image">
+                        <%
+                        } else {
+                        %>
+                        <p>No image available</p>
+                        <%
+                            }
+                        %>
+                    </td>
+                </tr>
                 <%
                     }
                 %>
-            </div>
+                </tbody>
+            </table>
             <%
             } else {
             %>
-            <p>No products available.</p>
+            <p>No products found.</p>
             <%
                 }
             %>
         </div>
+
         <div class="right-side">
             <h4>Add Item to Cart</h4>
             <form action="cart" method="post">
@@ -236,27 +169,38 @@
                 </div>
 
                 <div class="action-category">
-                    <button type="submit" class="btn btn-danger btn-sm">Add to cart</button>
+                    <button type="submit" class="btn btn-danger btn-sm">Add to Cart</button>
                 </div>
                 <div>
+
                     <%= request.getAttribute("message") != null ? request.getAttribute("message") : "" %>
                 </div>
             </form>
         </div>
     </section>
+
+
 </section>
 
 <script>
-    // JavaScript function to fill the form when a product card is clicked
-    function fillForm(code, name, qty, price) {
-        // Fill the form fields with the product details
-        document.getElementById('code').value = code;
-        document.getElementById('itemName').value = name;
-        document.getElementById('qty').value = qty;
-        document.getElementById('price').value = '$' + price.toFixed(2); // format price to 2 decimal places
-        document.getElementById('userName').value = ''; // Optionally reset customer name field
+    const table = document.getElementById('itemTableBody');
+    const rows = table.getElementsByTagName('tr');
+
+    // Add click event to each row to select the product
+    for (let row of rows) {
+        row.addEventListener('click', function () {
+            const cells = row.getElementsByTagName('td');
+            document.getElementById('code').value = cells[0].textContent.trim();
+            document.getElementById('itemName').value = cells[1].textContent.trim();
+            document.getElementById('qty').value = cells[2].textContent.trim();
+            document.getElementById('price').value = cells[3].textContent.trim();
+            document.getElementById('userName').value = '';
+        });
     }
+
+
 </script>
+
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
 </body>
 </html>

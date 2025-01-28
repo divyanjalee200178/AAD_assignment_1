@@ -10,11 +10,22 @@ import lombok.Setter;
 @Getter
 @Setter
 public class ProductDTO {
-    int code;
-    String name;
-    int qty;
-    double unitPrice;
+    private int code;
+    private String name;
+    private int qty;
+    private double unitPrice;
     private String imagePath;
+    private int c_code;
+
+
+    public ProductDTO(int code, String name, int qty, double unitPrice, String imagePath,int c_code) {
+        this.code = code;
+        this.name = name;
+        this.qty = qty;
+        this.unitPrice = unitPrice;
+        this.imagePath = imagePath;
+        this.c_code=c_code;
+    }
 
     public ProductDTO(int code, String name, int qty, double unitPrice, String imagePath) {
         this.code = code;

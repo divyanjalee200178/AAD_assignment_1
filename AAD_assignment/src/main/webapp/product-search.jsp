@@ -13,12 +13,17 @@
 <head>
     <title>Search Product</title>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet">
+</head>
     <style>
-        /* Global Styles */
+
         body {
-            background-color: white;
+            background-color: black;
             color: #e0e0e0;
             font-family: 'Helvetica', sans-serif;
+        }
+
+        .navbar {
+            margin-bottom: 30px;
         }
 
         h1 {
@@ -34,9 +39,12 @@
             max-width: 900px;
             margin-top: 50px;
             padding: 40px;
-            background-color: #1d1d1d;
-            border-radius: 15px;
-            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+            background: rgba(255, 255, 255, 0.3);
+            border-radius: 10px;
+            box-shadow: 0 4px 30px rgba(0, 0, 0, 0.1);
+            backdrop-filter: blur(10px);
+            -webkit-backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 255, 255, 0.18);
         }
 
         .form-control {
@@ -109,26 +117,7 @@
             transform: scale(1.1);
         }
 
-        .card-footer {
-            background-color: #333;
-            padding: 15px;
-            text-align: center;
-            border-bottom-left-radius: 10px;
-            border-bottom-right-radius: 10px;
-        }
 
-        .btn-success {
-            background-color: #28a745;
-            color: #fff;
-            border-radius: 25px;
-            padding: 10px 20px;
-            border: none;
-            font-size: 1rem;
-        }
-
-        .btn-success:hover {
-            background-color: #218838;
-        }
 
         .no-products {
             color: #999;
@@ -136,24 +125,38 @@
             font-size: 1.3rem;
         }
     </style>
-</head>
 <body>
+<nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+    <div class="container-fluid">
+        <a class="navbar-brand" href="index.jsp">Home</a>
+        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarNav">
+            <ul class="navbar-nav ms-auto">
+                <li class="nav-item"><a class="nav-link" href="login.jsp">SignIn</a></li>
+                <li class="nav-item"><a class="nav-link" href="user-save.jsp">SignUp</a></li>
+                <li class="nav-item"><a class="nav-link" href="customerDash.jsp">Dashboard</a></li>
+            </ul>
+        </div>
+    </div>
+</nav>
 
-<!-- Search Form -->
+
 <div class="container">
     <form action="product-search" method="get">
         <h1>Search Products</h1>
 
         <div class="mb-3">
             <label for="searchTerm" class="form-label">Product Name</label>
-            <input type="text" class="form-control" id="searchTerm" name="searchTerm" placeholder="Enter product name" value="<%= request.getParameter("searchTerm") != null ? request.getParameter("searchTerm") : "" %>">
+            <input type="text" class="form-control" id="searchTerm" style="color: white" name="searchTerm" placeholder="Enter product name" value="<%= request.getParameter("searchTerm") != null ? request.getParameter("searchTerm") : "" %>">
         </div>
 
         <button type="submit" class="btn btn-primary">Search</button>
     </form>
 </div>
 
-<!-- Product Results -->
+
 <div class="container my-4">
     <%
         List<ProductDTO> products = (List<ProductDTO>) request.getAttribute("products");
@@ -185,7 +188,7 @@
                 <input type="text" class="form-control" id="image_<%= product.getCode() %>" name="image_<%= product.getCode() %>" value="<%= product.getImagePath() %>">
             </div>
 
-            <%-- Display Image --%>
+
             <div class="text-center">
                 <% if (product.getImagePath() != null && !product.getImagePath().isEmpty()) { %>
                 <img src="<%= product.getImagePath() %>" alt="<%= product.getName() %>" class="product-image">
@@ -193,6 +196,10 @@
                 <span>No Image</span>
                 <% } %>
             </div>
+
+            <div class="mb-3">
+                <label for="cCode_<%= product.getCode() %>" class="form-label">Category code</label>
+                <input type="text" class="form-control" id="cCode_<%= product.getCode() %>" name="cCode_<%= product.getCode() %>" value="<%= product.getC_code() %>">
         </div>
         
     </div>

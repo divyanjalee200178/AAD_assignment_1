@@ -10,6 +10,7 @@
 <head>
     <title>Delete Category</title>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link href="https://cdn.jsdelivr.net/npm/@sweetalert2/theme-dark@4/dark.css" rel="stylesheet">
 </head>
 
 <style>
@@ -33,8 +34,15 @@
         box-shadow: 2px 6px 100px white;
     }
 
-    .alert {
-        margin-top: 15px;
+    .swal2-popup {
+        background-color: white !important;
+        color: black;
+        transform: scale(0.6);
+    }
+
+    .swal2-confirm {
+        background-color: #007bff !important;
+        color: white !important;
     }
 </style>
 
@@ -45,16 +53,35 @@
 %>
 
 <% if (message != null) { %>
-<div class="alert alert-success text-center" role="alert">
-    <%= message %>
-</div>
+<script>
+    document.addEventListener("DOMContentLoaded", function() {
+        Swal.fire({
+            title: "Category saved Successfully!",
+            text: '<%= message %>',
+            icon: "success",
+            draggable: true,  // Enable dragging of the alert
+            confirmButtonText: "OK",
+            theme: "light"  // Light theme
+        });
+    });
+</script>
 <% } %>
 
 <% if (error != null) { %>
-<div class="alert alert-danger text-center" role="alert">
-    <%= error %>
-</div>
+<script>
+    document.addEventListener("DOMContentLoaded", function() {
+        Swal.fire({
+            title: "Error",
+            text: '<%= error %>',
+            icon: "error",
+            draggable: true,  // Enable dragging of the alert
+            confirmButtonText: "OK",
+            theme: "light"  // Light theme
+        });
+    });
+</script>
 <% } %>
+
 
 <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
     <div class="container-fluid">
@@ -108,6 +135,6 @@
 
 
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
-
+<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11/dist/sweetalert2.min.js"></script>
 </body>
 </html>

@@ -1,4 +1,7 @@
-<%--
+<%@ page import="java.sql.Connection" %>
+<%@ page import="java.sql.DriverManager" %>
+<%@ page import="java.sql.Statement" %>
+<%@ page import="java.sql.ResultSet" %><%--
   Created by IntelliJ IDEA.
   User: Dilan Madusanka
   Date: 1/14/2025
@@ -10,6 +13,7 @@
 <head>
     <title>Add New Product</title>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link href="https://cdn.jsdelivr.net/npm/@sweetalert2/theme-dark@4/dark.css" rel="stylesheet">
 </head>
 
 
@@ -107,6 +111,17 @@
         background-color: #e0a800;
     }
 
+    .swal2-popup {
+        background-color: white !important;
+        color: black;
+        transform: scale(0.6);
+    }
+
+    .swal2-confirm {
+        background-color: #007bff !important;
+        color: white !important;
+    }
+
 </style>
 
 <body>
@@ -115,25 +130,36 @@
     String message=request.getParameter("message");
     String error=request.getParameter("error");
 %>
-<%
-    if (message!=null){
+<% if (message != null) { %>
+<script>
+    document.addEventListener("DOMContentLoaded", function() {
+        Swal.fire({
+            title: "Product Saved Successfully!",
+            text: '<%= message %>',
+            icon: "success",
+            draggable: true,
+            confirmButtonText: "OK",
+            theme: "light"
+        });
+    });
+</script>
+<% } %>
 
-%>
-<div style="color: green"><%=message%>
-</div>
-<%
-    }
-%>
+<% if (error != null) { %>
+<script>
+    document.addEventListener("DOMContentLoaded", function() {
+        Swal.fire({
+            title: "Error",
+            text: '<%= error %>',
+            icon: "error",
+            draggable: true,
+            confirmButtonText: "OK",
+            theme: "light"
+        });
+    });
+</script>
+<% } %>
 
-<%
-    if (error!=null){
-
-%>
-<div style="color: red"><%=error%>
-</div>
-<%
-    }
-%>
 
 <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
     <div class="container-fluid">
@@ -179,8 +205,45 @@
             <input type="file" id="image" name="image" required>
         </div>
 
+        <div class="col-md-6">
+            <label for="product" class="form-label">Category Code</label>
+            <select id="product" class="form-select" name="category_code" required>
+                <option selected disabled>Choose...</option>
+                <%
+                    try {
+                        Class.forName("com.mysql.cj.jdbc.Driver");
 
-<%--        <div>--%>
+                        Connection connection = DriverManager.getConnection(
+                                "jdbc:mysql://localhost/ecommerce",
+                                "root",
+                                "Ijse@123"
+                        );
+
+                        Statement statement = connection.createStatement();
+                        String query = "SELECT code FROM category";
+                        ResultSet resultSet = statement.executeQuery(query);
+
+                        while (resultSet.next()) {
+                            String code = resultSet.getString("code");
+
+                %>
+                <option value="<%= code %>"><%= code %> </option>
+                <%
+                    }
+                    resultSet.close();
+                    statement.close();
+                    connection.close();
+                } catch (Exception e) {
+                    e.printStackTrace();
+                %>
+                <option disabled>Error loading categories</option>
+                <%
+                    }
+                %>
+            </select>
+        </div>
+
+    <%--        <div>--%>
 <%--        <label for="image">Upload an Image:</label>--%>
 <%--        <input type="file" id="image" name="image" accept="image/*" required>--%>
 <%--        </div>--%>
@@ -215,7 +278,7 @@
 
                 <div class="action-item">
                     <span>Do you want to Search a Product?</span>
-                    <a href="product-search.jsp" class="btn btn-warning btn-sm">View</a>
+                    <a href="product-search.jsp" class="btn btn-info btn-sm">Search</a>
                 </div>
             </div>
         </div>
@@ -227,5 +290,6 @@
 
 
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11/dist/sweetalert2.min.js"></script>
 </body>
 </html>
